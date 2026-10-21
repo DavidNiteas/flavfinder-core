@@ -29,8 +29,9 @@ class ModelBackend(Protocol):
         """Persist the backend under ``path``."""
 
 
-def _positive_class_probability(proba: np.ndarray, classes: np.ndarray) -> np.ndarray:
+def _positive_class_probability(proba: Any, classes: Any) -> np.ndarray:
     proba = np.asarray(proba, dtype=float)
+    classes = np.asarray(classes)
     if proba.ndim == 1:
         return proba
     if proba.shape[1] == 1:
@@ -203,7 +204,7 @@ class AutoGluonBackend:
         return backend
 
 
-_BACKENDS = {
+_BACKENDS: dict[str, Any] = {
     "autogluon": AutoGluonBackend,
     "lightgbm": LightGBMBackend,
     "sklearn": SklearnBackend,

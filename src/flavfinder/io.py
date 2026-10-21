@@ -39,11 +39,13 @@ def read_frame(path: str | Path, schema: SpectrumSchema | None = None) -> pd.Dat
     suffix = path.suffix.lower()
     if suffix == ".csv":
         frame = pd.read_csv(path)
-    elif suffix in {".json", ".jsonl"}:
+    elif suffix == ".json":
         try:
-            frame = pd.read_json(path, orient="records" if suffix == ".jsonl" else None)
+            frame = pd.read_json(path)
         except ValueError:
             frame = pd.read_json(path, orient="records")
+    elif suffix == ".jsonl":
+        frame = pd.read_json(path, lines=True)
     else:
         raise ValueError(f"unsupported input type: {suffix!r}; use .csv or .json")
     missing = [col for col in schema.required_columns() if col not in frame.columns]

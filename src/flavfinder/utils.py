@@ -14,7 +14,11 @@ def _check_tolerance(mz_tol: float) -> float:
     return tol
 
 
-def mz_tolerance(mz: float, mz_tol: float, mz_tol_unit: str = "ppm") -> float:
+def mz_tolerance(
+    mz: float | np.ndarray,
+    mz_tol: float,
+    mz_tol_unit: str = "ppm",
+) -> float | np.ndarray:
     """Return the absolute m/z tolerance for ``mz`` in the requested unit."""
 
     tol = _check_tolerance(mz_tol)

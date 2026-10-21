@@ -28,7 +28,7 @@ def _iter_mz_values(data: Any, mz_col: str = "mz") -> Iterable[float]:
             yield from values
         return
     if np.isscalar(data):
-        yield float(data)
+        yield float(data)  # type: ignore[arg-type]
         return
     for item in data:
         if isinstance(item, str):
@@ -205,7 +205,7 @@ class FlavTokenizer:
 
     def __call__(self, mz: Any) -> Any:
         if np.isscalar(mz):
-            return self.mz_to_token(float(mz))
+            return self.mz_to_token(float(mz))  # type: ignore[arg-type]
         return self.mzs_to_tokens(mz)
 
     def __len__(self) -> int:
