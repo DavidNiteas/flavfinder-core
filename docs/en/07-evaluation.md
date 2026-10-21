@@ -68,6 +68,9 @@ print(metrics["auroc"], metrics["auprc"])
 3. Check the confusion matrix at the threshold you plan to use.
 4. Check calibration if you interpret `score` as a probability.
 5. Check [Data audit](./08-data-audit.md) for leakage before trusting any metric.
+6. Report **random-split** and **group-split** metrics separately. Use the
+   group-split result as the headline; the random-split result is an optimistic
+   reference.
 
 ## What evaluation does not prove
 

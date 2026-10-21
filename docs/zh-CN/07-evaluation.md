@@ -64,6 +64,7 @@ print(metrics["auroc"], metrics["auprc"])
 3. 看准备使用的阈值下的混淆矩阵。
 4. 若把 `score` 当概率解释，先看校准。
 5. 信任指标前先看 [数据审计](./08-data-audit.md) 的泄漏结论。
+6. 分别报告 **random split** 与 **group split** 指标。以 group split 为主结果，random split 只作为乐观参考。
 
 ## 评估不能证明什么
 
