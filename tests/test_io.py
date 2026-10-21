@@ -56,11 +56,14 @@ def test_coerce_binary_labels() -> None:
 def test_read_write_roundtrip(tmp_path, synthetic_frame) -> None:
     csv_path = tmp_path / "data.csv"
     json_path = tmp_path / "data.json"
+    jsonl_path = tmp_path / "data.jsonl"
     write_frame(synthetic_frame, csv_path)
     write_frame(synthetic_frame, json_path)
+    synthetic_frame.to_json(jsonl_path, orient="records", lines=True)
     schema = SpectrumSchema()
     assert len(read_frame(csv_path, schema)) == len(synthetic_frame)
     assert len(read_frame(json_path, schema)) == len(synthetic_frame)
+    assert len(read_frame(jsonl_path, schema)) == len(synthetic_frame)
 
 
 def test_read_frame_missing_column(tmp_path) -> None:
