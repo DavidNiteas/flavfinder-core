@@ -35,3 +35,6 @@ data/
 # Local / OS
 .DS_Store
 *.local.md
+
+# uv local lockfile (the package itself is pip/hatchling based)
+uv.lock

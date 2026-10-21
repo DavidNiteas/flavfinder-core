@@ -1,0 +1,32 @@
+data:
+  train: data/N/train.csv
+  validation: null
+  test: data/N/test.csv
+  mz_col: mz
+  intensity_col: intensity
+  label_col: label
+  id_col: null
+
+preprocessing:
+  method: binning
+  mz_min: 10.0
+  mz_max: 500.0
+  bin_width: 0.1
+  normalization: max
+  out_of_range: drop
+
+model:
+  backend: autogluon
+  eval_metric: roc_auc
+  presets: optimize_for_deployment
+  time_limit: null
+  random_state: 42
+  params: {}
+
+output_dir: artifacts/N
+validation_size: 0.2
+threshold_high_fpr: 0.01
+seed: 42
+overwrite: false
+with_bootstrap: true
+n_boot: 1000

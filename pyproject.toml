@@ -7,7 +7,7 @@ name = "flavfinder-core"
 version = "0.1.0"
 description = "Independent, code-only port of the flavfinder MS/MS flavonoid classifier"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.10,<3.13"
 license = { file = "LICENSE" }
 authors = [
   { name = "Lvjun Guo", email = "gljx898989@163.com" },
@@ -38,6 +38,7 @@ dependencies = [
 autogluon = ["autogluon.tabular>=1.0"]
 lightgbm = ["lightgbm>=4.0"]
 dev = [
+  "hatchling>=1.25",
   "pytest>=8.0",
   "pytest-cov>=5.0",
   "ruff>=0.5",
@@ -59,12 +60,16 @@ packages = ["src/flavfinder"]
 include = [
   "/src",
   "/tests",
+  "/docs",
+  "/configs",
+  "/examples",
   "/README.md",
   "/LICENSE",
   "/NOTICE",
   "/AUTHORS",
   "/CHANGELOG.md",
   "/CITATION.cff",
+  "/Makefile",
   "/pyproject.toml",
 ]
 

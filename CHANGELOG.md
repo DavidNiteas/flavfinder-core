@@ -14,3 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Bootstrap of the independent, code-only `flavfinder-core` repository.
 - MIT license, provenance notice, authors file, and citation metadata.
 - Package skeleton, minimal CLI, and release guard hooks.
+- Spectrum I/O and validation (CSV/JSON, strings or numeric sequences).
+- Binning and tokenization preprocessing with JSON persistence.
+- Pluggable AutoGluon, LightGBM, and scikit-learn backends.
+- Config-driven training, prediction, evaluation, and threshold selection.
+- Data auditing: exact/near duplicates, leakage reports, and group-aware splits.
+- Bilingual progressive documentation under `docs/en` and `docs/zh-CN`.
+- Synthetic-data test suite covering preprocessing, metrics, pipeline, CLI, and audit.
