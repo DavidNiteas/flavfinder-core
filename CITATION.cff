@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata below."
+title: "flavfinder-core"
+abstract: "Independent, code-only port of the flavfinder MS/MS flavonoid classifier."
+version: "0.1.0"
+date-released: "2026-10-22"
+license: MIT
+authors:
+  - family-names: "Guo"
+    given-names: "Lvjun"
+    alias: "Ficere"
+    email: "gljx898989@163.com"
+  - family-names: "Niteas"
+    given-names: "David"
+    email: "david.ql.d@foxmail.com"
+repository-code: "https://github.com/DavidNiteas/flavfinder-core"
+references:
+  - type: software
+    title: "flavfinder"
+    authors:
+      - family-names: "Guo"
+        given-names: "Lvjun"
+        alias: "Ficere"
+    url: "https://github.com/Ficere/flavfinder"
