@@ -224,23 +224,13 @@ def groups_from_pairs(n_items: int, pairs: list[tuple[int, int, float]]) -> np.n
     return groups
 
 
-def group_split_indices(
+def _greedy_group_split(
     groups: np.ndarray,
     *,
-    test_size: float = 0.2,
-    validation_size: float = 0.2,
-    seed: int = 42,
+    test_size: float,
+    validation_size: float,
+    seed: int,
 ) -> dict[str, np.ndarray]:
-    """Greedy group-aware split returning row indices for train/validation/test."""
-
-    groups = np.asarray(groups)
-    if groups.ndim != 1:
-        raise ValueError("groups must be one-dimensional")
-    if not 0 <= test_size < 1 or not 0 <= validation_size < 1:
-        raise ValueError("test_size and validation_size must be in [0, 1)")
-    if test_size + validation_size >= 1:
-        raise ValueError("test_size + validation_size must be < 1")
-
     rng = np.random.default_rng(seed)
     unique_groups = np.unique(groups)
     rng.shuffle(unique_groups)
@@ -268,3 +258,111 @@ def group_split_indices(
         "validation": np.flatnonzero(validation_mask),
         "test": np.flatnonzero(test_mask),
     }
+
+
+def _stratified_group_split(
+    groups: np.ndarray,
+    labels: np.ndarray,
+    *,
+    test_size: float,
+    validation_size: float,
+    seed: int,
+) -> dict[str, np.ndarray] | None:
+    from sklearn.model_selection import StratifiedGroupKFold
+
+    n_total = groups.size
+    target_test = n_total * test_size
+    overall_positive_rate = float(labels.mean())
+    n_splits = max(2, int(round(1.0 / test_size))) if test_size > 0 else 0
+    if n_splits == 0:
+        return None
+    splitter = StratifiedGroupKFold(n_splits=n_splits, shuffle=True, random_state=seed)
+    best_test: tuple[float, np.ndarray] | None = None
+    for _train_index, test_index in splitter.split(
+        np.zeros(n_total), labels, groups
+    ):
+        if np.unique(labels[test_index]).size < 2:
+            continue
+        size_penalty = abs(len(test_index) - target_test) / max(target_test, 1.0)
+        rate_penalty = abs(float(labels[test_index].mean()) - overall_positive_rate)
+        score = size_penalty + 2.0 * rate_penalty
+        if best_test is None or score < best_test[0]:
+            best_test = (score, test_index)
+    if best_test is None:
+        return None
+
+    test_index = best_test[1]
+    remaining = np.setdiff1d(np.arange(n_total), test_index, assume_unique=True)
+    if validation_size <= 0:
+        return {"train": remaining, "validation": np.array([], dtype=int), "test": test_index}
+
+    relative_validation = validation_size / (1.0 - test_size)
+    n_splits_val = max(2, int(round(1.0 / relative_validation)))
+    splitter_val = StratifiedGroupKFold(
+        n_splits=n_splits_val, shuffle=True, random_state=seed
+    )
+    target_validation = n_total * validation_size
+    best_val: tuple[float, np.ndarray] | None = None
+    for _train_rel, val_rel in splitter_val.split(
+        np.zeros(remaining.size), labels[remaining], groups[remaining]
+    ):
+        if np.unique(labels[remaining[val_rel]]).size < 2:
+            continue
+        size_penalty = abs(len(val_rel) - target_validation) / max(target_validation, 1.0)
+        rate_penalty = abs(float(labels[remaining[val_rel]].mean()) - overall_positive_rate)
+        score = size_penalty + 2.0 * rate_penalty
+        if best_val is None or score < best_val[0]:
+            best_val = (score, val_rel)
+    if best_val is None:
+        return None
+
+    val_rel = best_val[1]
+    train_index = remaining[np.setdiff1d(np.arange(remaining.size), val_rel, assume_unique=True)]
+    validation_index = remaining[val_rel]
+    return {"train": train_index, "validation": validation_index, "test": test_index}
+
+
+def group_split_indices(
+    groups: np.ndarray,
+    labels: np.ndarray | None = None,
+    *,
+    test_size: float = 0.2,
+    validation_size: float = 0.2,
+    seed: int = 42,
+) -> dict[str, np.ndarray]:
+    """Group-aware split returning row indices for train/validation/test.
+
+    When binary ``labels`` are provided and both classes are present, the split
+    uses :class:`~sklearn.model_selection.StratifiedGroupKFold` to preserve class
+    balance while keeping each group in exactly one split. Otherwise it falls
+    back to a deterministic greedy split.
+    """
+
+    groups = np.asarray(groups)
+    if groups.ndim != 1:
+        raise ValueError("groups must be one-dimensional")
+    if not 0 <= test_size < 1 or not 0 <= validation_size < 1:
+        raise ValueError("test_size and validation_size must be in [0, 1)")
+    if test_size + validation_size >= 1:
+        raise ValueError("test_size + validation_size must be < 1")
+    if labels is not None:
+        labels_array = coerce_binary_labels(labels)
+        if labels_array.size != groups.size:
+            raise ValueError("labels and groups lengths differ")
+        if np.unique(labels_array).size == 2:
+            split = _stratified_group_split(
+                groups,
+                labels_array,
+                test_size=test_size,
+                validation_size=validation_size,
+                seed=seed,
+            )
+            if split is not None:
+                return split
+    return _greedy_group_split(
+        groups,
+        test_size=test_size,
+        validation_size=validation_size,
+        seed=seed,
+    )
+

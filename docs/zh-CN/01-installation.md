@@ -54,6 +54,17 @@ python -m build
 python -m pip install dist/flavfinder_core-*.whl
 ```
 
+## Docker
+
+仓库包含纯代码 Dockerfile，不包含数据、模型、测试或文档：
+
+```bash
+docker build -t flavfinder-core:local .
+docker run --rm flavfinder-core:local --describe
+```
+
+Dockerfile 只安装基础包。需要 AutoGluon 或 LightGBM 时，请扩展镜像或在运行时安装 extra。
+
 ## 从 wheel 安装
 
 ```bash

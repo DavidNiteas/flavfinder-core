@@ -61,12 +61,16 @@ from flavfinder import groups_from_pairs, group_split_indices
 groups = groups_from_pairs(len(train_frame), pairs)
 split = group_split_indices(
     groups,
+    train_frame["label"],
     test_size=0.2,
     validation_size=0.2,
     seed=42,
 )
 print({name: len(indices) for name, indices in split.items()})
 ```
+
+提供二分类标签时，`group_split_indices` 使用分层分组交叉验证
+（`StratifiedGroupKFold`），同时保持两类样本和组不交叉；没有标签时退回贪心切分。
 
 `group_split_indices` 是贪心的分组切分，保证同一重复/近重复组只落在一侧。它不是真正的化合物级分组。
 

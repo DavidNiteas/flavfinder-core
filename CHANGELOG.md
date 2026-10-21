@@ -19,5 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Pluggable AutoGluon, LightGBM, and scikit-learn backends.
 - Config-driven training, prediction, evaluation, and threshold selection.
 - Data auditing: exact/near duplicates, leakage reports, and group-aware splits.
+- Stratified group split (`StratifiedGroupKFold`) with a greedy fallback.
 - Bilingual progressive documentation under `docs/en` and `docs/zh-CN`.
+- Code-only Dockerfile and `.dockerignore`.
 - Synthetic-data test suite covering preprocessing, metrics, pipeline, CLI, and audit.

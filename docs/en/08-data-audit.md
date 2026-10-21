@@ -63,12 +63,17 @@ from flavfinder import groups_from_pairs, group_split_indices
 groups = groups_from_pairs(len(train_frame), pairs)
 split = group_split_indices(
     groups,
+    train_frame["label"],
     test_size=0.2,
     validation_size=0.2,
     seed=42,
 )
 print({name: len(indices) for name, indices in split.items()})
 ```
+
+When binary labels are provided, `group_split_indices` uses stratified group
+cross-validation (`StratifiedGroupKFold`) to keep both classes and keep groups
+disjoint. Without labels it falls back to a greedy split.
 
 `group_split_indices` is a greedy, group-aware split. It keeps all members of a
 duplicate/near-duplicate group in the same split. It is not a substitute for

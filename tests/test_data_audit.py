@@ -63,3 +63,21 @@ def test_group_split_indices_are_disjoint() -> None:
     assert not (train & test)
     assert not (validation & test)
     assert train | validation | test == set(range(8))
+
+
+def test_group_split_stratified_keeps_both_classes() -> None:
+    groups = np.repeat(np.arange(40), 2)
+    labels = np.repeat(np.arange(40) % 2, 2)
+    split = group_split_indices(
+        groups,
+        labels,
+        test_size=0.2,
+        validation_size=0.2,
+        seed=3,
+    )
+    for indices in split.values():
+        assert set(np.unique(labels[indices])) == {0, 1}
+    group_sets = {name: set(np.unique(groups[idx])) for name, idx in split.items()}
+    assert not (group_sets["train"] & group_sets["validation"])
+    assert not (group_sets["train"] & group_sets["test"])
+    assert not (group_sets["validation"] & group_sets["test"])

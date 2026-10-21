@@ -61,6 +61,19 @@ python -m build
 python -m pip install dist/flavfinder_core-*.whl
 ```
 
+## Docker
+
+The repository includes a code-only Dockerfile. It does **not** include data,
+models, tests, or docs:
+
+```bash
+docker build -t flavfinder-core:local .
+docker run --rm flavfinder-core:local --describe
+```
+
+The Dockerfile installs the base package only. For AutoGluon or LightGBM, extend
+the image or install the extra at runtime.
+
 ## Install from a wheel
 
 ```bash
