@@ -93,6 +93,17 @@ python -m pip install -e ".[lightgbm]"
 - 保留原始输入文件；两次运行之间不要编辑。
 - 比较指标时使用相同后端与参数。
 
+## 构建问题
+
+### `python -m build` 报 `ensurepip is not available`
+
+隔离构建环境无法创建虚拟环境。请使用正常的 Python/venv，或安装 hatchling 后关闭隔离构建：
+
+```bash
+python -m pip install hatchling build
+python -m build --no-isolation
+```
+
 ## 仍然无法解决？
 
 开 issue 时附上：

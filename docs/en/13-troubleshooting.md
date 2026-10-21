@@ -103,6 +103,18 @@ recalibrating on a representative validation set.
 - Keep the exact input files; do not edit them between runs.
 - Use the same backend and parameters when comparing metrics.
 
+## Build problems
+
+### `python -m build` fails with `ensurepip is not available`
+
+The isolated build environment cannot create a virtualenv. Use a normal Python
+installation/venv, or install hatchling and build without isolation:
+
+```bash
+python -m pip install hatchling build
+python -m build --no-isolation
+```
+
 ## Still stuck?
 
 Open an issue with:
