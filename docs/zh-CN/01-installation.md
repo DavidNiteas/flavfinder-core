@@ -21,7 +21,8 @@ python -m pip install -e ".[dev]"
 python -m pip install -e ".[autogluon]"
 ```
 
-AutoGluon 依赖较大。需要复现原项目的表格模型流程时使用。
+AutoGluon 依赖较大。`autogluon` extra 安装 `autogluon.tabular[all]`，包含参考流程使用的
+CatBoost、XGBoost、LightGBM、FastAI 与 Torch 模型族。需要复现原项目的表格模型流程时使用。
 
 ### LightGBM（快速本地后端）
 

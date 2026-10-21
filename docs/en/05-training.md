@@ -62,7 +62,7 @@ flavfinder train --config configs/P.yaml
 
 | Backend | Extra | Use |
 |---|---|---|
-| `autogluon` | `.[autogluon]` | reference workflow; large dependency |
+| `autogluon` | `.[autogluon]` | reference workflow; installs the full AutoGluon tabular model zoo |
 | `lightgbm` | `.[lightgbm]` | fast local experiments |
 | `sklearn` | base install | tests and tiny datasets |
 

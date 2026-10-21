@@ -61,7 +61,7 @@ flavfinder train --config configs/P.yaml
 
 | 后端 | 额外安装 | 用途 |
 |---|---|---|
-| `autogluon` | `.[autogluon]` | 参考流程；依赖较大 |
+| `autogluon` | `.[autogluon]` | 参考流程；安装完整 AutoGluon 表格模型库 |
 | `lightgbm` | `.[lightgbm]` | 快速本地实验 |
 | `sklearn` | 基础安装 | 测试与极小数据 |
 

@@ -22,8 +22,10 @@ joblib. Optional backends are installed separately.
 python -m pip install -e ".[autogluon]"
 ```
 
-AutoGluon is a large dependency. Use it when you want to reproduce the
-reference tabular-model workflow.
+AutoGluon is a large dependency. The `autogluon` extra installs
+`autogluon.tabular[all]`, including the CatBoost, XGBoost, LightGBM, FastAI, and
+Torch model families used by the reference workflow. Use it when you want to
+reproduce the reference tabular-model workflow.
 
 ### LightGBM (fast local backend)
 

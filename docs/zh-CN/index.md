@@ -1,5 +1,7 @@
 # flavfinder-core 文档（简体中文）
 
+**语言：** [English](../en/index.md) · 简体中文
+
 `flavfinder-core` 是 flavfinder MS/MS 黄酮分类器的独立、纯代码移植版本。它提供配置驱动的训练与评估流程，不附带训练数据或预训练模型。
 
 ## 选择你的阅读路径

@@ -1,5 +1,7 @@
 # flavfinder-core documentation (English)
 
+**Language:** English · [简体中文](../zh-CN/index.md)
+
 `flavfinder-core` is an independent, code-only port of the flavfinder MS/MS
 flavonoid classifier. It provides a config-driven training and evaluation
 pipeline; it does not ship data or pretrained weights.
