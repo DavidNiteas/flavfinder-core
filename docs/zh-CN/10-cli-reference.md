@@ -37,6 +37,26 @@ flavfinder audit --train train.csv --test test.csv --output audit.json
 | `--train` / `--test` | 审计两表并报告精确重叠 |
 | `--output` | 写 JSON 报告 |
 
+## `flavfinder label`
+
+```bash
+flavfinder label --input raw_with_smiles.csv --output labeled.csv \
+  --report label_report.json
+```
+
+| 参数 | 含义 |
+|---|---|
+| `--input` | 含 SMILES 与 MS/MS 的 CSV/JSON |
+| `--output` | 标注后的 CSV/JSON |
+| `--smiles-col` | SMILES 列（默认 `smiles`） |
+| `--label-col` | 目标标签列（默认 `label`） |
+| `--patterns` | YAML SMARTS 规则覆盖 |
+| `--report` | JSON 标注汇总 |
+
+输出增加 `label`、`label_original`、`flavonoid_label`、`flavonoid_subclass`、
+`matched_patterns`、`smiles_canonical`、`inchikey`、`smiles_error`。需要 RDKit
+（`pip install -e ".[chem]"`）。
+
 ## `flavfinder train`
 
 ```bash
@@ -103,6 +123,9 @@ flavfinder evaluate --model artifacts/P --input data/P/test.csv \
 ```bash
 # 审计
 flavfinder audit --train data/P/train.csv --test data/P/test.csv --output reports/P_audit.json
+
+# 标注 SMILES + MS/MS
+flavfinder label --input raw_with_smiles.csv --output labeled.csv --report label_report.json
 
 # AutoGluon 训练
 flavfinder train --config configs/P.yaml

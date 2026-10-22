@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-10-22
+
+### Added
+
+- RDKit-based `flavfinder label` command for building labeled datasets from
+  MS/MS + SMILES.
+- Subclass-aware SMARTS ruleset for flavonols, flavones, flavanones,
+  flavanonols, flavan-3-ols, isoflavones, chalcones, dihydrochalcones, aurones,
+  and anthocyanidins.
+- Labeling metadata: canonical SMILES, InChIKey, subclass, matched patterns, and
+  invalid-SMILES errors.
+- `chem` optional dependency extra (`rdkit`).
+- Bilingual documentation on why the repository is code-only and how to build a
+  fresh dataset from public MS/MS libraries.
+
 ## [0.1.0] - 2026-10-22
 
 ### Added

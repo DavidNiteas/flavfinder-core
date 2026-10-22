@@ -41,6 +41,15 @@ The scikit-learn backend is included in the base install and is intended for
 smoke tests and very small datasets. It is not a replacement for AutoGluon or
 LightGBM on the full data.
 
+### RDKit (labeling)
+
+```bash
+python -m pip install -e ".[chem]"
+```
+
+RDKit is used by `flavfinder label` to match flavonoid scaffolds in SMILES. It
+is not needed for training or prediction if your data already has labels.
+
 ## Verify the install
 
 ```bash
@@ -79,7 +88,7 @@ the image or install the extra at runtime.
 ## Install from a wheel
 
 ```bash
-python -m pip install flavfinder_core-0.1.0-py3-none-any.whl
+python -m pip install flavfinder_core-*.whl
 ```
 
 ## Common installation problems
@@ -88,6 +97,7 @@ python -m pip install flavfinder_core-0.1.0-py3-none-any.whl
 |---|---|
 | `ModuleNotFoundError: autogluon` | `pip install -e ".[autogluon]"` |
 | `ModuleNotFoundError: lightgbm` | `pip install -e ".[lightgbm]"` |
+| `ModuleNotFoundError: rdkit` | `pip install -e ".[chem]"` |
 | Python 3.13 selected | Use Python 3.10–3.12 (`requires-python` excludes 3.13) |
 | Build fails on `hatchling` | Upgrade `pip` and retry; hatchling is declared in `pyproject.toml` |
 

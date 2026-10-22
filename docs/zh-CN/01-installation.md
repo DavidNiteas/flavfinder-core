@@ -36,6 +36,14 @@ LightGBM 轻量得多，适合快速实验与本地验证。
 
 scikit-learn 后端包含在基础安装中，仅用于冒烟测试和很小的数据集，不替代完整数据上的 AutoGluon / LightGBM。
 
+### RDKit（标注）
+
+```bash
+python -m pip install -e ".[chem]"
+```
+
+`flavfinder label` 用 RDKit 匹配 SMILES 中的黄酮骨架。若数据已有标签，训练/预测不需要它。
+
 ## 验证安装
 
 ```bash
@@ -69,7 +77,7 @@ Dockerfile 只安装基础包。需要 AutoGluon 或 LightGBM 时，请扩展镜
 ## 从 wheel 安装
 
 ```bash
-python -m pip install flavfinder_core-0.1.0-py3-none-any.whl
+python -m pip install flavfinder_core-*.whl
 ```
 
 ## 常见安装问题
@@ -78,6 +86,7 @@ python -m pip install flavfinder_core-0.1.0-py3-none-any.whl
 |---|---|
 | `ModuleNotFoundError: autogluon` | `pip install -e ".[autogluon]"` |
 | `ModuleNotFoundError: lightgbm` | `pip install -e ".[lightgbm]"` |
+| `ModuleNotFoundError: rdkit` | `pip install -e ".[chem]"` |
 | 选中了 Python 3.13 | 使用 3.10–3.12（`requires-python` 已排除 3.13） |
 | `hatchling` 构建失败 | 升级 `pip` 后重试；hatchling 已在 `pyproject.toml` 声明 |
 

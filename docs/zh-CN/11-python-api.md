@@ -136,6 +136,33 @@ thresholds = select_thresholds(y_true, y_score, high_fpr=0.01)
 points = calibration_points(y_true, y_score, n_bins=10)
 ```
 
+## 用 RDKit 标注
+
+```python
+from flavfinder import FlavonoidLabeler
+
+labeler = FlavonoidLabeler()
+result = labeler.label_smiles("O=c1c(O)c(-c2ccc(O)c(O)c2)oc2cc(O)cc(O)c12")
+print(result.label, result.subclass, result.matched_patterns)
+
+labeled = labeler.label_frame(frame, smiles_col="smiles", label_col="label")
+summary = labeler.summary(labeled)
+```
+
+`LabelResult` 字段：
+
+| 字段 | 含义 |
+|---|---|
+| `label` | 1、0，非法 SMILES 为 None |
+| `subclass` | 第一个命中的骨架家族 |
+| `matched_patterns` | 所有命中规则 |
+| `canonical_smiles` | RDKit canonical SMILES |
+| `inchikey` | 结构键 |
+| `error` | 解析/标准化错误 |
+
+用 `FlavonoidLabeler.from_yaml(path)` 覆盖规则集。RDKit 是可选 extra：
+`pip install -e ".[chem]"`。
+
 ## 错误行为
 
 - 输入缺失：`FileNotFoundError`

@@ -37,6 +37,26 @@ flavfinder audit --train train.csv --test test.csv --output audit.json
 | `--train` / `--test` | audit both tables and report exact overlap |
 | `--output` | write JSON report |
 
+## `flavfinder label`
+
+```bash
+flavfinder label --input raw_with_smiles.csv --output labeled.csv \
+  --report label_report.json
+```
+
+| Flag | Meaning |
+|---|---|
+| `--input` | CSV/JSON with SMILES and MS/MS |
+| `--output` | labeled CSV/JSON |
+| `--smiles-col` | SMILES column (default `smiles`) |
+| `--label-col` | target label column (default `label`) |
+| `--patterns` | YAML SMARTS ruleset override |
+| `--report` | JSON labeling summary |
+
+The output adds `label`, `label_original`, `flavonoid_label`,
+`flavonoid_subclass`, `matched_patterns`, `smiles_canonical`, `inchikey`, and
+`smiles_error`. RDKit is required (`pip install -e ".[chem]"`).
+
 ## `flavfinder train`
 
 ```bash
@@ -104,6 +124,9 @@ Unhandled exceptions are not masked by the CLI.
 ```bash
 # Audit
 flavfinder audit --train data/P/train.csv --test data/P/test.csv --output reports/P_audit.json
+
+# Label SMILES + MS/MS
+flavfinder label --input raw_with_smiles.csv --output labeled.csv --report label_report.json
 
 # Train with AutoGluon
 flavfinder train --config configs/P.yaml

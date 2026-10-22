@@ -132,6 +132,23 @@ model:
 | `with_bootstrap` | `true` | 是否对验证/测试做 bootstrap |
 | `n_boot` | `1000` | bootstrap 次数 |
 
+## SMARTS 规则文件
+
+`flavfinder label --patterns configs/flavonoid_patterns.yaml` 使用：
+
+```yaml
+patterns:
+  flavonol:
+    smarts: "O=c1c(O)c(-c2ccccc2)oc2ccccc12"
+    description: "3-hydroxyflavone / flavonol scaffold"
+  flavone:
+    smarts: "O=c1cc(-c2ccccc2)oc2ccccc12"
+    description: "2-phenylchromen-4-one scaffold"
+```
+
+YAML 顺序就是优先级：第一个命中作为 `flavonoid_subclass`，所有命中记录在
+`matched_patterns`。任意命中即判为正类。自定义规则作为真实标签使用前请先验证。
+
 ## 路径解析
 
 路径按**当前工作目录**解析，不按配置文件位置。请在仓库根目录运行，或使用绝对路径。

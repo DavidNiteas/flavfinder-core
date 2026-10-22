@@ -35,6 +35,7 @@ compound-2,"120.0,180.0,240.0","5,25,100",0
 | `mz` | yes | comma-separated numbers or numeric list | m/z values |
 | `intensity` | yes | comma-separated numbers or numeric list | same length as `mz` |
 | `label` | for training/evaluation | 0 or 1 | optional for prediction |
+| `smiles` | for labeling | string | optional; used by `flavfinder label` |
 | `id` / `name` | no | string or number | copied to prediction output |
 
 The default column names can be changed in YAML or with CLI flags:
@@ -59,6 +60,10 @@ flavfinder train --train data.csv \
 
 Rows are never silently dropped. Invalid input raises an error with the row
 index so it can be fixed.
+
+If you have structures, add a `smiles` column and use
+[Build your own dataset](./15-build-your-own-dataset.md) to create `label`
+values before training.
 
 ## Common mistakes
 

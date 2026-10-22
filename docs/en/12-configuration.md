@@ -133,6 +133,25 @@ model:
 | `with_bootstrap` | `true` | bootstrap validation/test metrics |
 | `n_boot` | `1000` | bootstrap iterations |
 
+## SMARTS pattern file
+
+`flavfinder label --patterns configs/flavonoid_patterns.yaml` uses:
+
+```yaml
+patterns:
+  flavonol:
+    smarts: "O=c1c(O)c(-c2ccccc2)oc2ccccc12"
+    description: "3-hydroxyflavone / flavonol scaffold"
+  flavone:
+    smarts: "O=c1cc(-c2ccccc2)oc2ccccc12"
+    description: "2-phenylchromen-4-one scaffold"
+```
+
+The YAML order is the priority order: the first match becomes
+`flavonoid_subclass`, while `matched_patterns` records every match. Any match
+labels the molecule positive. Validate custom rules before using them as ground
+truth.
+
 ## Path resolution
 
 Paths are resolved relative to the **current working directory**, not the config

@@ -62,6 +62,17 @@ python -m pip install -e ".[autogluon]"
 python -m pip install -e ".[lightgbm]"
 ```
 
+### `RDKit is optional; install with ...`
+
+```bash
+python -m pip install -e ".[chem]"
+```
+
+### `flavfinder label` reports invalid SMILES
+
+The row is kept with `smiles_error` set and `label` empty. Filter these rows out
+before training; do not treat them as negatives.
+
 ### `output directory is not empty`
 
 Set `overwrite: true` or pass `--overwrite`. This prevents accidentally

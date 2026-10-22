@@ -139,6 +139,33 @@ thresholds = select_thresholds(y_true, y_score, high_fpr=0.01)
 points = calibration_points(y_true, y_score, n_bins=10)
 ```
 
+## Labeling with RDKit
+
+```python
+from flavfinder import FlavonoidLabeler
+
+labeler = FlavonoidLabeler()
+result = labeler.label_smiles("O=c1c(O)c(-c2ccc(O)c(O)c2)oc2cc(O)cc(O)c12")
+print(result.label, result.subclass, result.matched_patterns)
+
+labeled = labeler.label_frame(frame, smiles_col="smiles", label_col="label")
+summary = labeler.summary(labeled)
+```
+
+`LabelResult` fields:
+
+| Field | Meaning |
+|---|---|
+| `label` | `1`, `0`, or `None` for invalid SMILES |
+| `subclass` | first matching scaffold family |
+| `matched_patterns` | every matching rule |
+| `canonical_smiles` | RDKit canonical SMILES |
+| `inchikey` | structure key |
+| `error` | parse/standardization error |
+
+Use `FlavonoidLabeler.from_yaml(path)` to override the ruleset. RDKit is an
+optional extra: `pip install -e ".[chem]"`.
+
 ## Error behavior
 
 The library raises standard exceptions with contextual messages:

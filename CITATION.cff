@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: "If you use this software, please cite it using the metadata below."
 title: "flavfinder-core"
 abstract: "Independent, code-only port of the flavfinder MS/MS flavonoid classifier."
-version: "0.1.0"
+version: "0.2.0"
 date-released: "2026-10-22"
 license: MIT
 authors:
