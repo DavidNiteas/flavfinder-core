@@ -1,4 +1,4 @@
-"""Facade preserving the original ``DataTransformer`` entry point."""
+"""Facade preserving the ``DataTransformer`` entry point."""
 
 from __future__ import annotations
 

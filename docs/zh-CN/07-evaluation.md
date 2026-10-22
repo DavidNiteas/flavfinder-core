@@ -26,7 +26,7 @@ flavfinder evaluate \
 | Bootstrap CI | 有限测试集带来的不确定性 |
 | 校准点 | 可靠性曲线（预测均值 vs 实际比例） |
 
-原始数据不平衡，**AUPRC 通常比 accuracy 更有信息量**。AUROC 高但 AUPRC 差，仍可能不是好的筛选模型。
+MS/MS 数据通常不平衡，**AUPRC 通常比 accuracy 更有信息量**。AUROC 高但 AUPRC 差，仍可能不是好的筛选模型。
 
 ## 阈值
 

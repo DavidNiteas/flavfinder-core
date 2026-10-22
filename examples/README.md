@@ -1,7 +1,7 @@
 # Examples
 
 `input_format.json` is a **synthetic** input file showing the expected schema. It is
-not taken from the original training data.
+not taken from real training data.
 
 Input schema:
 
@@ -13,4 +13,4 @@ Input schema:
 | `label` | no | Optional binary label for evaluation |
 
 Prediction output will add `score` and `probability` fields. The exact CLI and output
-schema will be documented once the ported prediction pipeline lands.
+schema will be documented once the prediction pipeline lands.

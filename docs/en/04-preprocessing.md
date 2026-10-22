@@ -44,7 +44,7 @@ A peak is assigned to the nearest bin center. Peaks outside the grid are:
 - `error` — raise,
 - `clip` — clamped to the first/last bin.
 
-The original data has roughly 10% of peaks above m/z 500; if those peaks matter
+The data used during development has roughly 10% of peaks above m/z 500; if those peaks matter
 for your application, increase `mz_max` or choose `error` to make the loss
 visible.
 
@@ -112,7 +112,7 @@ preprocessor = load_preprocessor("artifacts/P/preprocessing.json")
 ## Performance notes
 
 - Binning uses vectorized nearest-bin assignment and `bincount`; it avoids the
-  original per-peak `argmin` loop.
+  a per-peak `argmin` loop.
 - Transformation is single-process by default for reproducibility. Use external
   batching if you need more throughput.
 - A 25k × 4900 float64 matrix is about 1 GB; `float32` halves that at a small

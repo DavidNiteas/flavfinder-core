@@ -1,7 +1,7 @@
 """Shared synthetic fixtures.
 
-All spectra here are generated deterministically and are not taken from the
-original training data.
+All spectra here are generated deterministically and are not taken from real
+training data.
 """
 
 from __future__ import annotations

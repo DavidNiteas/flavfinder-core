@@ -98,7 +98,7 @@ artifacts/P/
 
 ## 类别不平衡
 
-原始数据不平衡，不要只看 accuracy：
+开发数据不平衡，不要只看 accuracy：
 
 - 同时报告 **AUPRC** 与 AUROC；
 - 查看所选阈值下的混淆矩阵；

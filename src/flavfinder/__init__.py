@@ -1,10 +1,10 @@
-"""Independent, code-only port of the flavfinder MS/MS flavonoid classifier."""
+"""Independent, code-only implementation of the flavfinder MS/MS flavonoid classifier."""
 
 # ruff: noqa: E402
 
 from __future__ import annotations
 
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 
 from flavfinder.bundle import ModelBundle
 from flavfinder.chem import FlavonoidLabeler, LabelResult, label_frame

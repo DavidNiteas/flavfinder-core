@@ -77,7 +77,7 @@ values before training.
 
 ## Prediction output
 
-Prediction writes the original columns plus:
+Prediction writes the input columns plus:
 
 | Column | Meaning |
 |---|---|

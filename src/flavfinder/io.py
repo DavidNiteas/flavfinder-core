@@ -84,7 +84,7 @@ def prepare_frame(
 ) -> pd.DataFrame:
     """Validate spectra and attach parsed m/z and intensity arrays.
 
-    The returned frame keeps the original columns and adds two object columns:
+    The returned frame keeps the input columns and adds two object columns:
     ``_mz_values`` and ``_intensity_values``. Parsing is idempotent.
     """
 

@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-10-22
+
+### Changed
+
+- Removed references to a private source repository from README, NOTICE,
+  citation metadata, package metadata, CLI output, and documentation.
+- Reframed authorship: Lvjun Guo (Ficere) and David Niteas are listed as
+  authors, without an "original/port" role split.
+- Clarified the code-only distribution rationale and the dataset-building
+  workflow.
+
 ## [0.2.0] - 2026-10-22
 
 ### Added

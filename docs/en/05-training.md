@@ -102,7 +102,7 @@ version, and a compact metric summary. It does not copy the training data.
 
 ## Class imbalance
 
-The original data is imbalanced. Do not rely on accuracy alone:
+The development data is imbalanced. Do not rely on accuracy alone:
 
 - report **AUPRC** alongside AUROC,
 - inspect the confusion matrix at the chosen thresholds,

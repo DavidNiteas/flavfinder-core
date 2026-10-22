@@ -2,8 +2,8 @@
 
 **Language:** English · [简体中文](../zh-CN/index.md)
 
-`flavfinder-core` is an independent, code-only port of the flavfinder MS/MS
-flavonoid classifier. It provides a config-driven training and evaluation
+`flavfinder-core` is an independent, code-only implementation of the flavfinder
+MS/MS flavonoid classifier. It provides a config-driven training and evaluation
 pipeline; it does not ship data or pretrained weights.
 
 ## Choose your path
@@ -26,28 +26,27 @@ pipeline; it does not ship data or pretrained weights.
 
 - **Level 0 — Scope:** why the repository is code-only and how to build your own
   dataset from public data.
-- **Level 1 — Start:** installation and quickstart. No prior knowledge of the
-  original implementation is required.
+- **Level 1 — Start:** installation and quickstart. No prior knowledge of the method is required.
 - **Level 2 — Use:** data format, preprocessing, training, prediction, and
   evaluation. These pages show the normal workflow.
 - **Level 3 — Understand:** method, thresholds, leakage, group-aware splits, and
   limitations. Read this before trusting a reported metric.
 - **Level 4 — Reference:** exact CLI flags, Python signatures, configuration
   fields, and troubleshooting.
+
 ## What is not in this repository
 
 - `train_datasets/` or any real MS/MS spectra
 - pretrained model weights or AutoGluon predictors
-- internal work orders, development notes, or reference checkouts
+- internal work orders or development notes
 
-The original project and its historical commits remain the authoritative source
-for the data and provenance. See [`NOTICE`](../../NOTICE) and
+Authorship and distribution scope are recorded in [`NOTICE`](../../NOTICE) and
 [`AUTHORS`](../../AUTHORS).
 
-## Provenance and license
+## Authors and license
 
-- Original work: Lvjun Guo (Ficere) `<gljx898989@163.com>`
-- Port maintainer: David Niteas `<david.ql.d@foxmail.com>`
+- Lvjun Guo (Ficere) `<gljx898989@163.com>`
+- David Niteas `<david.ql.d@foxmail.com>`
 - License: MIT (code only)
 
 **Next:** [Installation](./01-installation.md)

@@ -4,8 +4,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "flavfinder-core"
-version = "0.2.0"
-description = "Independent, code-only port of the flavfinder MS/MS flavonoid classifier"
+version = "0.2.1"
+description = "Independent, code-only implementation of the flavfinder MS/MS flavonoid classifier"
 readme = "README.md"
 requires-python = ">=3.10,<3.13"
 license = { file = "LICENSE" }
@@ -52,7 +52,6 @@ flavfinder = "flavfinder.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/DavidNiteas/flavfinder-core"
-Original = "https://github.com/Ficere/flavfinder"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/flavfinder"]

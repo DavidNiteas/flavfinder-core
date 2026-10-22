@@ -2,7 +2,7 @@
 
 **语言：** [English](../en/index.md) · 简体中文
 
-`flavfinder-core` 是 flavfinder MS/MS 黄酮分类器的独立、纯代码移植版本。它提供配置驱动的训练与评估流程，不附带训练数据或预训练模型。
+`flavfinder-core` 是 flavfinder MS/MS 黄酮分类器的独立、纯代码实现。它提供配置驱动的训练与评估流程，不附带训练数据或预训练模型。
 
 ## 选择你的阅读路径
 
@@ -23,7 +23,7 @@
 ## 文档层级
 
 - **第 0 层 — 范围**：为什么只发代码，以及如何从公开数据构建自己的数据集。
-- **第 1 层 — 开始**：安装与快速开始，不要求了解原实现。
+- **第 1 层 — 开始**：安装与快速开始，不要求了解方法背景。
 - **第 2 层 — 使用**：数据格式、预处理、训练、预测、评估，覆盖日常工作流。
 - **第 3 层 — 理解**：方法、阈值、泄漏、分组切分与局限。报告指标前应先读。
 - **第 4 层 — 参考**：CLI、Python API、配置字段、故障排查。
@@ -32,14 +32,14 @@
 
 - `train_datasets/` 或任何真实 MS/MS 谱图
 - 预训练模型权重或 AutoGluon predictor
-- 内部工单、开发笔记、参考库 checkout
+- 内部工单或开发笔记
 
-原始项目及其历史提交仍是数据与来源的权威出处。见 [`NOTICE`](../../NOTICE) 与 [`AUTHORS`](../../AUTHORS)。
+作者与分发范围记录在 [`NOTICE`](../../NOTICE) 与 [`AUTHORS`](../../AUTHORS)。
 
-## 来源与许可
+## 作者与许可
 
-- 原始工作：Lvjun Guo (Ficere) `<gljx898989@163.com>`
-- 移植维护者：David Niteas `<david.ql.d@foxmail.com>`
+- Lvjun Guo (Ficere) `<gljx898989@163.com>`
+- David Niteas `<david.ql.d@foxmail.com>`
 - 许可证：MIT（仅代码）
 
 **下一页：** [安装](./01-installation.md)

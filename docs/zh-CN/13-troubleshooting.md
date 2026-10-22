@@ -101,7 +101,7 @@ python -m pip install -e ".[chem]"
 
 - 固定 `seed` 与 `model.random_state`。
 - 保存 `metadata.json`（版本、配置、特征名）。
-- 保留原始输入文件；两次运行之间不要编辑。
+- 保留输入文件；两次运行之间不要编辑。
 - 比较指标时使用相同后端与参数。
 
 ## 构建问题
@@ -121,7 +121,7 @@ python -m build --no-isolation
 
 1. 执行的命令；
 2. 完整报错；
-3. 输入的形状/列名（敏感数据不要贴原始谱图）；
+3. 输入的形状/列名（敏感数据不要贴真实谱图）；
 4. `flavfinder --version` 与 `python --version`。
 
 **下一页：** [文档索引](./index.md)

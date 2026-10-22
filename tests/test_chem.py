@@ -57,7 +57,7 @@ def test_invalid_smiles() -> None:
     assert result.error == "invalid SMILES"
 
 
-def test_label_frame_preserves_original_label() -> None:
+def test_label_frame_preserves_existing_label() -> None:
     frame = pd.DataFrame(
         {
             "smiles": [POSITIVES["quercetin"], NEGATIVES["caffeine"], "bad"],

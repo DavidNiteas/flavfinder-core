@@ -1,29 +1,12 @@
 flavfinder-core
 ===============
 
-This repository is an independent, code-only port of the original
-"flavfinder" project. It does not include the original project's Git
-history, training data, real MS/MS example spectra, or pretrained models.
+flavfinder-core is an independent, code-only implementation of the flavfinder
+MS/MS flavonoid classifier.
 
-Original project
-----------------
-Name:   flavfinder
-URL:    https://github.com/Ficere/flavfinder
-Author: Lvjun Guo (Ficere) <gljx898989@163.com>
-Original HEAD at port time:
-        2517ca4da6100a918418c7e06e5a98ae67d687ce
-
-What is not included
---------------------
-- train_datasets/ (P/N train and test CSV files)
-- examples/infile.json, outfile.json, and other real spectra
-- trained_models/ or any AutoGluon predictor / model weights
-
-The original project and its reference checkout remain the authoritative
-source for the data and the historical commits.
-
-Port maintainer
----------------
+Authors
+-------
+Lvjun Guo (Ficere) <gljx898989@163.com>
 David Niteas <david.ql.d@foxmail.com>
 
 Distribution scope

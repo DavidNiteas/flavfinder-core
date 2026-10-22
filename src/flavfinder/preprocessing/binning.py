@@ -34,8 +34,7 @@ class BinningTransformer:
         How to handle peaks outside the grid: ``drop`` (default), ``error``,
         or ``clip``.
     dtype:
-        Output dtype. ``float64`` preserves the original implementation's
-        precision; ``float32`` halves memory use.
+        Output dtype. ``float64`` preserves full precision; ``float32`` halves memory use.
     """
 
     method = "binning"
@@ -197,5 +196,5 @@ class BinningTransformer:
         )
 
 
-# Backwards-compatible name used by the original implementation.
+# Backwards-compatible alias.
 DataBinner = BinningTransformer

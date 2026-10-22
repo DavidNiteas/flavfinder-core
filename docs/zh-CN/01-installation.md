@@ -52,7 +52,7 @@ flavfinder --describe
 ```
 
 - `--version` 输出包版本。
-- `--describe` 说明这是独立的纯代码移植版本，不包含数据与模型。
+- `--describe` 说明这是独立的纯代码实现，不包含数据与模型。
 
 ## 构建 wheel
 

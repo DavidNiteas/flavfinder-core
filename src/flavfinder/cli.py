@@ -36,12 +36,12 @@ def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="flavfinder",
         description=(
-            "Independent, code-only port of the flavfinder MS/MS flavonoid "
+            "Independent, code-only implementation of the flavfinder MS/MS flavonoid "
             "classifier."
         ),
     )
     parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
-    parser.add_argument("--describe", action="store_true", help="describe this port")
+    parser.add_argument("--describe", action="store_true", help="describe this implementation")
     subparsers = parser.add_subparsers(dest="command")
 
     audit_parser = subparsers.add_parser("audit", help="audit a spectrum table")
@@ -226,8 +226,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = parser.parse_args(argv)
     if args.describe:
         print(
-            "flavfinder-core is an independent, code-only port of "
-            "https://github.com/Ficere/flavfinder.\n"
+            "flavfinder-core is an independent, code-only implementation of the "
+            "flavfinder MS/MS flavonoid classifier.\n"
             "It does not include training data, real example spectra, or "
             "pretrained models."
         )

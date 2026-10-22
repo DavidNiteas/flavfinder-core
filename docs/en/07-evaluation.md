@@ -27,7 +27,7 @@ control the bootstrap.
 | Bootstrap CI | uncertainty from the finite test set |
 | Calibration points | reliability curve (mean predicted vs observed) |
 
-The original data is imbalanced, so **AUPRC is usually more informative than
+MS/MS data is often imbalanced, so **AUPRC is usually more informative than
 accuracy**. A high AUROC with poor AUPRC can still be a weak screening model.
 
 ## Thresholds

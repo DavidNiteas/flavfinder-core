@@ -128,7 +128,7 @@ class LightGBMBackend:
 
 
 class AutoGluonBackend:
-    """Reference backend used by the original flavfinder implementation."""
+    """Reference backend for the flavfinder method."""
 
     name = "autogluon"
 

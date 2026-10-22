@@ -1,9 +1,6 @@
 # flavfinder-core
 
-An independent, code-only port of the **flavfinder** MS/MS flavonoid classifier.
-
-> This is **not** the original repository. It has its own Git history and does **not**
-> include the original training data, real MS/MS example spectra, or pretrained models.
+An independent, code-only implementation of the **flavfinder** MS/MS flavonoid classifier.
 
 ## Documentation
 
@@ -24,9 +21,9 @@ The docs use progressive disclosure:
 
 ## What this repository is
 
-`flavfinder-core` is a from-scratch, release-oriented port of the original
-[`Ficere/flavfinder`](https://github.com/Ficere/flavfinder) implementation. It provides
-a clean, installable, testable, and reproducible codebase that implements the method:
+`flavfinder-core` is a from-scratch, release-oriented implementation of the
+flavfinder MS/MS flavonoid classifier. It provides a clean, installable, testable, and
+reproducible codebase that implements the method:
 
 - MS/MS spectrum ingestion and validation
 - Binning and tokenization preprocessing
@@ -46,8 +43,8 @@ We intentionally do **not** distribute training data or pretrained models:
    on the user's own spectra. We ship the full training pipeline and configs.
 2. **A frozen dataset would be stale.** Public MS/MS libraries such as GNPS,
    MassBank, and MoNA contain far more spectra, newer records, and richer
-   metadata than any snapshot we could bundle. The original data used here is an
-   older reference version, not a recommended training source.
+   metadata than any snapshot we could bundle. The data used during development is
+   an older reference version, not a recommended training source.
 3. **Users should build labels from current structures.** We provide an
    RDKit-based labeling tool (`flavfinder label`) that turns a table with MS/MS
    and SMILES into labeled flavonoid/non-flavonoid data using a subclass-aware
@@ -84,10 +81,9 @@ python -m pip install -e ".[chem]"
 - Training data (`train_datasets/`)
 - Real example spectra
 - Pretrained model weights or AutoGluon predictors
-- Internal development notes, work orders, or reference checkouts
+- Internal development notes or work orders
 
-The original authors and the original HEAD at port time are recorded in [`NOTICE`](./NOTICE)
-and [`AUTHORS`](./AUTHORS).
+The authors are listed in [`AUTHORS`](./AUTHORS); distribution scope is recorded in [`NOTICE`](./NOTICE).
 
 ## Install
 
@@ -154,10 +150,10 @@ artifacts are intentionally not distributed.
 
 ## Attribution
 
-- Original work: Lvjun Guo (Ficere) `<gljx898989@163.com>`
-- Port maintainer: David Niteas `<david.ql.d@foxmail.com>`
+- Lvjun Guo (Ficere) `<gljx898989@163.com>`
+- David Niteas `<david.ql.d@foxmail.com>`
 
-See [`NOTICE`](./NOTICE) for provenance and [`AUTHORS`](./AUTHORS) for the contributor list.
+See [`AUTHORS`](./AUTHORS) and [`NOTICE`](./NOTICE).
 
 ## License
 

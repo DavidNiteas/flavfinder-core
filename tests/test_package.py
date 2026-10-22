@@ -7,7 +7,7 @@ from flavfinder.cli import main
 
 
 def test_version() -> None:
-    assert __version__ == "0.2.0"
+    assert __version__ == "0.2.1"
 
 
 def test_cli_describe(capsys) -> None:

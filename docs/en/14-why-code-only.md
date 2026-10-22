@@ -26,7 +26,7 @@ validate it on your own representative data, then version it separately.
 
 ## 2. We do not ship training data
 
-The original data used for this port is an older reference snapshot. Public MS/MS
+The data used during development is an older reference snapshot. Public MS/MS
 libraries are larger and fresher:
 
 - **GNPS** — community spectral libraries and molecular networks

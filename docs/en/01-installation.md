@@ -60,7 +60,7 @@ flavfinder --describe
 Expected behavior:
 
 - `--version` prints the package version.
-- `--describe` explains that this is an independent code-only port and that data
+- `--describe` explains that this is an independent code-only implementation and that data
   and models are not included.
 
 ## Build a wheel

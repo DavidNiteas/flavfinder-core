@@ -9,7 +9,7 @@ Given a tandem mass spectrum (MS/MS), predict whether the underlying compound
 belongs to the flavonoid class. Positive and negative ion modes are modeled
 separately.
 
-## Reference pipeline
+## Pipeline
 
 1. Parse comma-separated m/z and intensity arrays.
 2. Preprocess:
@@ -32,42 +32,41 @@ provided for lighter local runs and tests.
 - `high` is forced to be at least `mid`.
 - `probability` buckets: `score > high` → high; `score > mid` → mid; else low.
 
-## What this port changes
+## Implementation notes
 
-The port keeps the method recognizable but fixes engineering and evaluation
-problems in the original implementation:
+This implementation keeps the method recognizable while making the engineering
+and evaluation behavior explicit:
 
-| Area | Original | This port |
+| Area | Common pitfall | This implementation |
 |---|---|---|
-| Tokenizer JSON | `FlavTokenizer.from_json(path)` was called as a class method on an instance method | `from_json` is a real class method; `load` is the primary API |
-| Peak parsing | list inputs could raise `UnboundLocalError` | strings, lists, tuples, and arrays are supported and validated |
+| Tokenizer JSON | calling `from_json(path)` as if it were a class method | `from_json` is a real class method; `load` is the primary API |
+| Peak parsing | list inputs can fail at runtime | strings, lists, tuples, and arrays are supported and validated |
 | Binning | per-peak `argmin` loop | vectorized nearest-bin assignment + `bincount` |
-| Normalization | binning normalized, tokenization did not | both normalize by default, configurable |
-| Out-of-range peaks | silently clamped/dropped | explicit `drop` / `error` / `clip` policy |
-| Thresholds | selected and reported on the test set | selected on validation; test is evaluation-only |
-| Data audit | none | exact/near-duplicate and leakage tooling |
-| Parallelism | `pandarallel` global side effects | deterministic single-process default |
+| Normalization | different defaults between methods | both normalize by default, configurable |
+| Out-of-range peaks | silent clamping/dropping | explicit `drop` / `error` / `clip` policy |
+| Thresholds | selecting and reporting on the test set | selected on validation; test is evaluation-only |
+| Data audit | no leakage tooling | exact/near-duplicate and leakage tooling |
+| Parallelism | global parallel side effects | deterministic single-process default |
 
 ## Design constraints
 
 - The public repository is **code only**; data and models are not distributed.
-- The code must work on user-provided data, not only on the original dataset.
-- The original provenance is recorded in `NOTICE` and `AUTHORS`.
-- The public history is independent of the original repository's history.
+- The code must work on user-provided data, not only on the development dataset.
+- Authorship and distribution scope are recorded in `NOTICE` and `AUTHORS`.
+- The repository history is independent and self-contained.
 
 ## Limitations
 
-- No compound identifiers are provided, so group splits are approximate.
+- If your data lacks compound identifiers, group splits are approximate.
 - Binning discards peaks outside the configured m/z range.
 - The model is a tabular classifier, not a structure elucidation method.
 - Calibration is reported but not guaranteed.
 - Domain shift across instruments, ionization modes, and sample preparation is
   not solved by this repository.
 
-## Provenance
+## Authors
 
-Original project: <https://github.com/Ficere/flavfinder>  
-Original author: Lvjun Guo (Ficere) `<gljx898989@163.com>`  
-Original HEAD at port time: `2517ca4da6100a918418c7e06e5a98ae67d687ce`
+- Lvjun Guo (Ficere) `<gljx898989@163.com>`
+- David Niteas `<david.ql.d@foxmail.com>`
 
 **Next:** [CLI reference](./10-cli-reference.md)
