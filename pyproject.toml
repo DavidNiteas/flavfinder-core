@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "flavfinder-core"
-version = "0.2.1"
+version = "0.2.2"
 description = "Independent, code-only implementation of the flavfinder MS/MS flavonoid classifier"
 readme = "README.md"
 requires-python = ">=3.10,<3.13"
