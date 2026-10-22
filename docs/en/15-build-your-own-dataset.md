@@ -10,6 +10,9 @@ SMILES. Labeling needs RDKit, which is an optional extra:
 python -m pip install -e ".[chem]"
 ```
 
+If an AI assistant is doing the work, point it at [`AGENTS.md`](../../AGENTS.md).
+It will ask the source questions below before downloading anything.
+
 ## Input schema
 
 The table needs these columns:
@@ -163,8 +166,13 @@ Report AUPRC as well as AUROC, check calibration, and don't touch the test set.
 | GNPS | <https://gnps.ucsd.edu> | community libraries and molecular networks |
 | MassBank | <https://massbank.eu> | public reference spectra |
 | MoNA | <https://mona.fiehnlab.ucdavis.edu> | MassBank of North America |
+| HMDB | <https://hmdb.ca> | human metabolites; academic terms |
 | NIST | licensed | commercial library |
 | METLIN | licensed | commercial library |
+| mzCloud | <https://www.mzcloud.org> | commercial high-resolution library |
+| MassIVE | <https://massive.ucsd.edu> | raw LC-MS/MS; needs processing |
+| MetaboLights | <https://www.ebi.ac.uk/metabolights> | study-level data; metadata varies |
+| Metabolomics Workbench | <https://www.metabolomicsworkbench.org> | study-level data; metadata varies |
 
 Check each source's license and metadata quality. A spectrum without a reliable
 structure cannot be labeled by this tool.

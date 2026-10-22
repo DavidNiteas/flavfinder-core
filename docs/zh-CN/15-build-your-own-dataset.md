@@ -9,6 +9,9 @@
 python -m pip install -e ".[chem]"
 ```
 
+如果是 AI 助理在做，直接让它读 [`AGENTS.md`](../../AGENTS.md)。它会在下载数据前
+先问清楚来源和许可证。
+
 ## 输入 schema
 
 表里至少要有：
@@ -159,8 +162,13 @@ flavfinder audit --train P_train.csv --test P_test.csv --output reports/P_audit.
 | GNPS | <https://gnps.ucsd.edu> | 社区谱库与分子网络 |
 | MassBank | <https://massbank.eu> | 公开参考谱 |
 | MoNA | <https://mona.fiehnlab.ucdavis.edu> | MassBank of North America |
+| HMDB | <https://hmdb.ca> | 人类代谢物；学术条款 |
 | NIST | 商业授权 | 商业谱库 |
 | METLIN | 商业授权 | 商业谱库 |
+| mzCloud | 商业授权 | 高分辨商业谱库 |
+| MassIVE | <https://massive.ucsd.edu> | 原始 LC-MS/MS；需要处理 |
+| MetaboLights | <https://www.ebi.ac.uk/metabolights> | 研究级数据；元数据质量不一 |
+| Metabolomics Workbench | <https://www.metabolomicsworkbench.org> | 研究级数据；元数据质量不一 |
 
 请检查每个来源的许可证与元数据质量。没有可靠结构的谱图无法用本工具标注。
 

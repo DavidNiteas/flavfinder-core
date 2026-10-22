@@ -53,6 +53,48 @@ python -m pip install -e ".[autogluon]"  # reference tabular backend
 
 There is no CI in this repo. Run the checks locally.
 
+## Data sources: talk to the user first
+
+Don't pick a database silently. The source determines coverage, label quality,
+ion mode, and licensing. Ask the user:
+
+- Do you already have MS/MS data, or do you want to pull from a public library?
+- Which ion mode: positive, negative, or both?
+- Do the records have SMILES or InChIKey? Without structures, `flavfinder label`
+  cannot assign labels.
+- Which instrument and collision energy? Do you want one domain or a mix?
+- Which license can you accept? Some libraries are commercial.
+- Do you need curated reference spectra, or raw LC-MS/MS runs that still need
+  processing?
+
+| Source | Good for | Structures | Notes |
+|---|---|---|---|
+| **GNPS** | natural products, community libraries, molecular networks | often in library exports | open/community; check each library's license |
+| **MassBank** (EU/JP) | curated reference MS/MS | many records | free; license and metadata vary per record |
+| **MoNA** | aggregated public libraries | often | free; check each record's license |
+| **HMDB** | human metabolites | yes | academic terms; commercial use may need a license |
+| **NIST** | high-quality reference spectra | yes | commercial; do not redistribute |
+| **METLIN** | standards and reference spectra | yes | commercial; do not redistribute |
+| **mzCloud** | high-resolution MS/MS | yes | commercial; do not redistribute |
+| **MassIVE** | raw LC-MS/MS datasets | not always | raw data; needs processing and structure linking |
+| **MetaboLights** | study-level metabolomics data | not always | raw/processed; metadata quality varies |
+| **Metabolomics Workbench** | study-level metabolomics data | not always | raw/processed; metadata quality varies |
+
+Recommendations:
+
+- **Free/open starting point:** GNPS + MassBank + MoNA.
+- **Human metabolites:** HMDB + MoNA/GNPS.
+- **Commercial access already available:** NIST, METLIN, or mzCloud.
+- **Raw runs:** MassIVE, MetaboLights, or Metabolomics Workbench; expect
+  preprocessing and structure matching before training.
+- **No structures:** stop and ask for SMILES/InChIKey. Do not label by m/z alone.
+- **No preference:** start with one source, manually check 20–50 records, then
+  scale. Don't mix sources until you've checked ion mode, collision energy, and
+  instrument effects.
+
+Keep `source`, license, ion mode, instrument, and collision energy in the output
+table. Don't redistribute licensed spectra.
+
 ## Data gate
 
 A spectrum table needs `mz`, `intensity`, and a `label` for training. Each row is
@@ -180,7 +222,9 @@ When you report results, include:
 
 ## 中文速览
 
-先确认用户是要训练、预测、建数据集，还是只跑个示例。没有数据就不要编，向用户要
+先确认用户是要训练、预测、建数据集，还是只跑个示例。没有数据就不要编，先和用户
+讨论来源：开放数据优先 GNPS + MassBank + MoNA；人类代谢物可看 HMDB；NIST、METLIN、
+mzCloud 是商业库，先确认用户有授权。确认许可证、离子模式、仪器和碰撞能，再要
 MS/MS + SMILES 表。有 SMILES 就用 `flavfinder label`，删掉非法结构，去重，按
 化合物/InChIKey 或近重复组切分。正负离子模式分开训练，测试集不调阈值。不要提交
 数据、真实谱图、模型权重或生成产物。回答时给出实际命令、数据切分和指标，不要编造
