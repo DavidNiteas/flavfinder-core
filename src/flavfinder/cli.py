@@ -7,10 +7,11 @@ import sys
 from collections.abc import Sequence
 
 from flavfinder import __version__
+from flavfinder.chem import FlavonoidLabeler
 from flavfinder.config import TrainingConfig
 from flavfinder.data import audit_frame, leakage_report
 from flavfinder.evaluate import evaluate
-from flavfinder.io import SpectrumSchema, read_frame, save_json
+from flavfinder.io import SpectrumSchema, read_frame, read_table, save_json, write_frame
 from flavfinder.predict import predict
 from flavfinder.train import train
 
@@ -49,6 +50,16 @@ def _build_parser() -> argparse.ArgumentParser:
     audit_parser.add_argument("--test", help="test table for leakage analysis")
     audit_parser.add_argument("--output", help="write a JSON report")
     _add_schema_args(audit_parser)
+
+    label_parser = subparsers.add_parser(
+        "label", help="label a SMILES table with RDKit flavonoid rules"
+    )
+    label_parser.add_argument("--input", required=True)
+    label_parser.add_argument("--output", required=True)
+    label_parser.add_argument("--smiles-col", default="smiles")
+    label_parser.add_argument("--label-col", default="label")
+    label_parser.add_argument("--patterns", help="YAML file with SMARTS overrides")
+    label_parser.add_argument("--report", help="write a JSON labeling summary")
 
     train_parser = subparsers.add_parser("train", help="train a model bundle")
     train_parser.add_argument("--config", help="YAML training config")
@@ -100,6 +111,38 @@ def _cmd_audit(args: argparse.Namespace) -> int:
     print(f"audited {len(report)} section(s)")
     if args.output:
         print(f"wrote {args.output}")
+    return 0
+
+
+def _cmd_label(args: argparse.Namespace) -> int:
+    try:
+        from rdkit import RDLogger
+
+        RDLogger.DisableLog("rdApp.*")  # type: ignore[attr-defined]
+    except ImportError:
+        pass
+    frame = read_table(args.input)
+    labeler = (
+        FlavonoidLabeler.from_yaml(args.patterns)
+        if args.patterns
+        else FlavonoidLabeler()
+    )
+    labeled = labeler.label_frame(
+        frame,
+        smiles_col=args.smiles_col,
+        label_col=args.label_col,
+    )
+    write_frame(labeled, args.output)
+    summary = labeler.summary(labeled)
+    if args.report:
+        save_json(summary, args.report)
+    print(
+        f"labeled {summary['n_valid']} valid / {summary['n_total']} rows; "
+        f"positive rate {summary['positive_rate']}"
+    )
+    if args.report:
+        print(f"wrote {args.report}")
+    print(f"wrote {args.output}")
     return 0
 
 
@@ -194,6 +237,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 0
     handlers = {
         "audit": _cmd_audit,
+        "label": _cmd_label,
         "train": _cmd_train,
         "predict": _cmd_predict,
         "evaluate": _cmd_evaluate,

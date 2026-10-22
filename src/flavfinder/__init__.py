@@ -4,9 +4,10 @@
 
 from __future__ import annotations
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 from flavfinder.bundle import ModelBundle
+from flavfinder.chem import FlavonoidLabeler, LabelResult, label_frame
 from flavfinder.config import (
     DataConfig,
     ModelConfig,
@@ -44,6 +45,8 @@ __all__ = [
     "DataConfig",
     "DataTransformer",
     "FlavTokenizer",
+    "FlavonoidLabeler",
+    "LabelResult",
     "ModelBundle",
     "ModelConfig",
     "PreprocessingConfig",
@@ -57,6 +60,7 @@ __all__ = [
     "evaluate_metrics",
     "group_split_indices",
     "groups_from_pairs",
+    "label_frame",
     "leakage_report",
     "near_duplicate_pairs",
     "predict",

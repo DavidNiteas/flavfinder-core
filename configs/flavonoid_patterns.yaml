@@ -1,0 +1,41 @@
+# Flavonoid subclass rules used by `flavfinder label`.
+#
+# Each entry is a prioritized SMARTS rule. A molecule is labeled positive if it
+# matches at least one rule; `flavonoid_subclass` is the first matching rule in
+# this order, while `matched_patterns` records every match.
+#
+# These are scaffold-level heuristics, not a validated taxonomy. Validate on a
+# labeled benchmark (e.g. NPClassifier/ClassyFire) before using them as ground
+# truth.
+
+patterns:
+  flavonol:
+    smarts: "O=c1c(O)c(-c2ccccc2)oc2ccccc12"
+    description: "3-hydroxyflavone / flavonol scaffold"
+  flavone:
+    smarts: "O=c1cc(-c2ccccc2)oc2ccccc12"
+    description: "2-phenylchromen-4-one scaffold"
+  dihydroflavonol:
+    smarts: "O=C1C(O)C(c2ccccc2)Oc2ccccc12"
+    description: "flavanonol / 3-hydroxyflavanone scaffold"
+  flavanone:
+    smarts: "O=C1CC(c2ccccc2)Oc2ccccc12"
+    description: "2-phenylchroman-4-one scaffold"
+  flavan3ol:
+    smarts: "OC1Cc2ccccc2OC1c1ccccc1"
+    description: "flavan-3-ol scaffold"
+  isoflavone:
+    smarts: "O=c1c(-c2ccccc2)coc2ccccc12"
+    description: "3-phenylchromen-4-one scaffold"
+  chalcone:
+    smarts: "[CX3;!R](=O)(C=Cc1ccccc1)c1ccccc1"
+    description: "open-chain 1,3-diphenylprop-2-en-1-one"
+  dihydrochalcone:
+    smarts: "[CX3;!R](=O)(CCc1ccccc1)c1ccccc1"
+    description: "open-chain 1,3-diphenylpropan-1-one"
+  aurone:
+    smarts: "O=C1C(=Cc2ccccc2)Oc2ccccc12"
+    description: "benzofuran-3-one / aurone scaffold"
+  anthocyanidin:
+    smarts: "[o+]1c(-c2ccccc2)ccc2ccccc12"
+    description: "flavylium / anthocyanidin scaffold"

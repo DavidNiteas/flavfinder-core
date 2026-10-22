@@ -29,25 +29,30 @@ class SpectrumSchema:
         return [self.mz_col, self.intensity_col]
 
 
-def read_frame(path: str | Path, schema: SpectrumSchema | None = None) -> pd.DataFrame:
-    """Read a CSV or JSON spectrum table."""
+def read_table(path: str | Path) -> pd.DataFrame:
+    """Read a CSV/JSON/JSONL table without schema validation."""
 
-    schema = schema or SpectrumSchema()
     path = Path(path)
     if not path.exists():
         raise FileNotFoundError(path)
     suffix = path.suffix.lower()
     if suffix == ".csv":
-        frame = pd.read_csv(path)
-    elif suffix == ".json":
+        return pd.read_csv(path)
+    if suffix == ".json":
         try:
-            frame = pd.read_json(path)
+            return pd.read_json(path)
         except ValueError:
-            frame = pd.read_json(path, orient="records")
-    elif suffix == ".jsonl":
-        frame = pd.read_json(path, lines=True)
-    else:
-        raise ValueError(f"unsupported input type: {suffix!r}; use .csv or .json")
+            return pd.read_json(path, orient="records")
+    if suffix == ".jsonl":
+        return pd.read_json(path, lines=True)
+    raise ValueError(f"unsupported input type: {suffix!r}; use .csv, .json, or .jsonl")
+
+
+def read_frame(path: str | Path, schema: SpectrumSchema | None = None) -> pd.DataFrame:
+    """Read a CSV or JSON spectrum table."""
+
+    schema = schema or SpectrumSchema()
+    frame = read_table(path)
     missing = [col for col in schema.required_columns() if col not in frame.columns]
     if missing:
         raise ValueError(f"missing required column(s): {', '.join(missing)}")

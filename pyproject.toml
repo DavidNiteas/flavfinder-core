@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "flavfinder-core"
-version = "0.1.0"
+version = "0.2.0"
 description = "Independent, code-only port of the flavfinder MS/MS flavonoid classifier"
 readme = "README.md"
 requires-python = ">=3.10,<3.13"
@@ -35,6 +35,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+chem = ["rdkit>=2023.9"]
 autogluon = ["autogluon.tabular[all]>=1.0,<2"]
 lightgbm = ["lightgbm>=4.0"]
 dev = [
