@@ -34,8 +34,7 @@ provided for lighter local runs and tests.
 
 ## Implementation notes
 
-This implementation keeps the method recognizable while making the engineering
-and evaluation behavior explicit:
+A few things are easy to get wrong. Here's what this code does instead:
 
 | Area | Common pitfall | This implementation |
 |---|---|---|
@@ -48,21 +47,19 @@ and evaluation behavior explicit:
 | Data audit | no leakage tooling | exact/near-duplicate and leakage tooling |
 | Parallelism | global parallel side effects | deterministic single-process default |
 
-## Design constraints
+## Scope
 
-- The public repository is **code only**; data and models are not distributed.
-- The code must work on user-provided data, not only on the development dataset.
-- Authorship and distribution scope are recorded in `NOTICE` and `AUTHORS`.
-- The repository history is independent and self-contained.
+- No data or model files are shipped.
+- It should work on data you bring, not only the set used during development.
 
 ## Limitations
 
 - If your data lacks compound identifiers, group splits are approximate.
 - Binning discards peaks outside the configured m/z range.
 - The model is a tabular classifier, not a structure elucidation method.
-- Calibration is reported but not guaranteed.
-- Domain shift across instruments, ionization modes, and sample preparation is
-  not solved by this repository.
+- Calibration is reported; don't assume it's good.
+- This repo doesn't fix domain shift across instruments, ionization modes, or sample
+  preparation.
 
 ## Authors
 

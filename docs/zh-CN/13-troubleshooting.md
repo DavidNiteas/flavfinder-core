@@ -65,8 +65,7 @@ python -m pip install -e ".[chem]"
 
 ### `flavfinder label` 报非法 SMILES
 
-该行会保留，`smiles_error` 有值，`label` 为空。训练前请过滤这些行，不要把
-它们当作负样本。
+该行会保留，`smiles_error` 有值，`label` 为空。训练前把这些行删掉，别当负样本。
 
 ### `output directory is not empty`
 

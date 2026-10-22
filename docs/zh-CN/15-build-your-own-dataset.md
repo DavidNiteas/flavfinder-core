@@ -3,7 +3,7 @@
 **层级：** 2 — 使用  
 **前置条件：** [数据格式](./03-data-format.md)、[为什么只发代码](./14-why-code-only.md)。
 
-本指南从 MS/MS 谱图与 SMILES 构建带标签的训练表。标注步骤使用 RDKit，需安装可选 extra：
+下面是从 MS/MS + SMILES 生成训练表的流程。标注需要 RDKit，它是可选依赖：
 
 ```bash
 python -m pip install -e ".[chem]"
@@ -11,7 +11,7 @@ python -m pip install -e ".[chem]"
 
 ## 输入 schema
 
-至少包含：
+表里至少要有：
 
 | 列 | 含义 |
 |---|---|
@@ -19,7 +19,7 @@ python -m pip install -e ".[chem]"
 | `mz` | 逗号分隔的 MS/MS m/z |
 | `intensity` | 逗号分隔的强度 |
 
-可选列会保留在输出中：
+可选列会原样带出：
 
 | 列 | 用途 |
 |---|---|
@@ -69,14 +69,14 @@ flavfinder label \
 | `inchikey` | 用于去重的 InChIKey |
 | `smiles_error` | 解析/标准化错误 |
 
-汇总报告包含：
+报告里有：
 
 - 总行数、有效/非法行数；
 - 正/负样本数与正类比例；
 - 亚类分布；
 - 重复 InChIKey 组与行数。
 
-## 2. 过滤与检查
+## 2. 过滤和检查
 
 - 删除 `smiles_error` 非空的行。
 - 检查亚类分布；某个规则突然过多可能说明规则过宽。
@@ -100,7 +100,7 @@ prepared["spectrum_key"] = [
 ]
 ```
 
-同一化合物的不同碰撞能谱图是否有用，由你决定。保留它们时，切分必须按化合物分组。
+同一化合物不同碰撞能的谱图可能有用，可以保留，但切分时要按组。
 
 ## 4. 无泄漏切分
 
@@ -117,7 +117,7 @@ splitter = StratifiedGroupKFold(n_splits=5, shuffle=True, random_state=42)
 
 没有可靠结构时，使用 [数据审计](./08-data-audit.md) 中的近重复分组。
 
-不要在测试集上调阈值。
+别在测试集上调阈值。
 
 ## 5. 正/负离子模式分别训练
 
@@ -137,7 +137,7 @@ flavfinder train \
   --backend lightgbm
 ```
 
-参考流程使用 AutoGluon：
+要用 AutoGluon：
 
 ```bash
 flavfinder train --config configs/P.yaml --backend autogluon
@@ -150,7 +150,7 @@ flavfinder evaluate --model artifacts/P --input P_test.csv --output reports/P_me
 flavfinder audit --train P_train.csv --test P_test.csv --output reports/P_audit.json
 ```
 
-AUROC 之外同时报告 AUPRC，检查校准，测试集保持不动。
+除了 AUROC 也报 AUPRC，检查校准，别动测试集。
 
 ## 公开数据源
 
@@ -164,12 +164,12 @@ AUROC 之外同时报告 AUPRC，检查校准，测试集保持不动。
 
 请检查每个来源的许可证与元数据质量。没有可靠结构的谱图无法用本工具标注。
 
-## 注意事项
+## 需要注意
 
-- RDKit 规则是骨架级启发式；用 NPClassifier/ClassyFire 或人工复核验证。
-- 黄酮定义存在差异。糖苷、盐、混合物应先标准化。
-- 离子模式、仪器、碰撞能会改变谱图；不要未经验证混合不同域。
+- RDKit 规则匹配的是骨架；用 NPClassifier/ClassyFire 或人工复核。
+- “黄酮”的定义并不统一。糖苷、盐、混合物先标准化再匹配。
+- 离子模式、仪器、碰撞能都会改变谱图，别在未检查的情况下混用。
 - 公开记录可能有标签噪声、缺失结构和重复。
-- 随机切分偏乐观；使用分组/化合物级切分。
+- 随机切分通常比真实情况好看，用分组/化合物级切分。
 
 **下一页：** [训练](./05-training.md)

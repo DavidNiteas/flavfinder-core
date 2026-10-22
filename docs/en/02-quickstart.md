@@ -3,8 +3,8 @@
 **Level:** 1 — Start  
 **Prerequisites:** [Installation](./01-installation.md).
 
-This page runs the whole pipeline on a tiny **synthetic** dataset. No real
-training data is needed.
+Here is the whole pipeline on a tiny **synthetic** dataset. You do not need real
+training data.
 
 ## 1. Generate a synthetic labeled table
 

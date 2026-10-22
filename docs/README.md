@@ -1,15 +1,14 @@
-# flavfinder-core documentation
+# flavfinder-core docs
 
 **Languages:** [English](./en/index.md) · [简体中文](./zh-CN/index.md)
 
-This documentation is organized for progressive disclosure:
+The docs go from first run to reference:
 
-1. **Scope** — why the repository is code-only and how to build your own dataset.
-2. **Start** — install and run a small end-to-end example.
-3. **Use** — prepare data, preprocess, train, predict, and evaluate.
-4. **Understand** — method, thresholds, leakage, and limitations.
-5. **Reference** — CLI, Python API, configuration, and troubleshooting.
+1. **Scope** — why the repo has no data or model files, and how to make your own dataset.
+2. **Start** — install and run a small example.
+3. **Use** — data, preprocessing, training, prediction, evaluation.
+4. **Check** — method, thresholds, leakage, and limits.
+5. **Reference** — CLI, Python API, config, troubleshooting.
 
-The repository contains **code only**. Training data, real example spectra, and
-pretrained models are not included. See [`NOTICE`](../NOTICE) for provenance and
-[Why code-only](./en/14-why-code-only.md) for the reasoning.
+The repo contains code only. It doesn't include training data, real spectra, or
+model weights. [`NOTICE`](../NOTICE) describes what's shipped.

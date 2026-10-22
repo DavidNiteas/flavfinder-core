@@ -60,8 +60,7 @@ flavfinder --describe
 Expected behavior:
 
 - `--version` prints the package version.
-- `--describe` explains that this is an independent code-only implementation and that data
-  and models are not included.
+- `--describe` prints what the package is and what it does not ship.
 
 ## Build a wheel
 

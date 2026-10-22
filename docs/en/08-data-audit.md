@@ -76,8 +76,8 @@ cross-validation (`StratifiedGroupKFold`) to keep both classes and keep groups
 disjoint. Without labels it falls back to a greedy split.
 
 `group_split_indices` is a greedy, group-aware split. It keeps all members of a
-duplicate/near-duplicate group in the same split. It is not a substitute for
-true compound-level grouping.
+duplicate/near-duplicate group in the same split. It is a proxy for
+compound-level grouping, not a replacement.
 
 ## The compound-ID limitation
 

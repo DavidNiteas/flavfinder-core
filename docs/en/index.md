@@ -6,7 +6,7 @@
 MS/MS flavonoid classifier. It provides a config-driven training and evaluation
 pipeline; it does not ship data or pretrained weights.
 
-## Choose your path
+## Pick a starting point
 
 | If you want to... | Read |
 |---|---|
@@ -22,26 +22,20 @@ pipeline; it does not ship data or pretrained weights.
 | Tune a run | [Configuration](./12-configuration.md) |
 | Fix an error | [Troubleshooting](./13-troubleshooting.md) |
 
-## Documentation levels
+## How to read these docs
 
-- **Level 0 — Scope:** why the repository is code-only and how to build your own
-  dataset from public data.
-- **Level 1 — Start:** installation and quickstart. No prior knowledge of the method is required.
-- **Level 2 — Use:** data format, preprocessing, training, prediction, and
-  evaluation. These pages show the normal workflow.
-- **Level 3 — Understand:** method, thresholds, leakage, group-aware splits, and
-  limitations. Read this before trusting a reported metric.
-- **Level 4 — Reference:** exact CLI flags, Python signatures, configuration
-  fields, and troubleshooting.
+- **First time here?** [Install](./01-installation.md), then run the [Quickstart](./02-quickstart.md).
+- **Have your own spectra?** [Data format](./03-data-format.md) → [Build your own dataset](./15-build-your-own-dataset.md) → [Training](./05-training.md).
+- **Need to trust a metric?** [Evaluation](./07-evaluation.md) → [Data audit](./08-data-audit.md) → [Method](./09-method.md).
+- **Looking for a flag or signature?** [CLI](./10-cli-reference.md), [Python API](./11-python-api.md), [Configuration](./12-configuration.md).
 
-## What is not in this repository
+## Not in this repo
 
 - `train_datasets/` or any real MS/MS spectra
 - pretrained model weights or AutoGluon predictors
 - internal work orders or development notes
 
-Authorship and distribution scope are recorded in [`NOTICE`](../../NOTICE) and
-[`AUTHORS`](../../AUTHORS).
+Authors are in [`AUTHORS`](../../AUTHORS). What is shipped is in [`NOTICE`](../../NOTICE).
 
 ## Authors and license
 

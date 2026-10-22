@@ -3,8 +3,8 @@
 **Level:** 2 — Use  
 **Prerequisites:** [Data format](./03-data-format.md), [Why code-only](./14-why-code-only.md).
 
-This guide builds a labeled training table from MS/MS spectra and SMILES. The
-labeling step uses RDKit, which is an optional extra:
+Here's a workflow for building a labeled training table from MS/MS spectra and
+SMILES. Labeling needs RDKit, which is an optional extra:
 
 ```bash
 python -m pip install -e ".[chem]"
@@ -12,7 +12,7 @@ python -m pip install -e ".[chem]"
 
 ## Input schema
 
-Your table must contain at least:
+The table needs these columns:
 
 | Column | Meaning |
 |---|---|
@@ -20,7 +20,7 @@ Your table must contain at least:
 | `mz` | comma-separated MS/MS m/z values |
 | `intensity` | comma-separated intensities |
 
-Optional columns are preserved in the output:
+Optional columns pass through:
 
 | Column | Use |
 |---|---|
@@ -70,19 +70,19 @@ Output columns:
 | `inchikey` | InChIKey for deduplication |
 | `smiles_error` | parse/standardization error, if any |
 
-A summary report contains:
+The report includes:
 
 - total, valid, and invalid rows,
 - positive/negative counts and positive rate,
 - subclass distribution,
 - duplicate InChIKey groups and rows.
 
-## 2. Filter and inspect
+## 2. Filter and check
 
 - Drop rows with a non-empty `smiles_error`.
 - Check the subclass distribution; a sudden spike may indicate a too-broad rule.
 - Inspect false positives and false negatives on a manual sample.
-- Keep the raw record and the rule version for reproducibility.
+- Keep the input record and the rule version for reproducibility.
 
 ## 3. Deduplicate
 
@@ -102,8 +102,8 @@ prepared["spectrum_key"] = [
 ]
 ```
 
-Decide whether multiple spectra per compound (different collision energies) are
-useful. If they are, keep them but group them for splitting.
+Multiple spectra per compound (different collision energies) can be useful. Keep
+them, but group them when splitting.
 
 ## 4. Split without leakage
 
@@ -121,7 +121,7 @@ splitter = StratifiedGroupKFold(n_splits=5, shuffle=True, random_state=42)
 For spectra without reliable structures, use the near-duplicate grouping in
 [Data audit](./08-data-audit.md).
 
-Never tune thresholds on the test split.
+Don't tune thresholds on test.
 
 ## 5. Train positive and negative modes separately
 
@@ -141,7 +141,7 @@ flavfinder train \
   --backend lightgbm
 ```
 
-Use AutoGluon for the reference workflow:
+For the AutoGluon path:
 
 ```bash
 flavfinder train --config configs/P.yaml --backend autogluon
@@ -154,8 +154,7 @@ flavfinder evaluate --model artifacts/P --input P_test.csv --output reports/P_me
 flavfinder audit --train P_train.csv --test P_test.csv --output reports/P_audit.json
 ```
 
-Report AUPRC alongside AUROC, inspect calibration, and keep the test set
-untouched.
+Report AUPRC as well as AUROC, check calibration, and don't touch the test set.
 
 ## Public data sources
 
@@ -170,15 +169,14 @@ untouched.
 Check each source's license and metadata quality. A spectrum without a reliable
 structure cannot be labeled by this tool.
 
-## Caveats
+## Things to watch
 
-- RDKit rules are scaffold heuristics; validate against NPClassifier/ClassyFire
-  or manual review.
-- Flavonoid definitions vary. Glycosides, salts, and mixtures should be
-  standardized before matching.
-- Ion mode, instrument, and collision energy shift spectra. Do not mix domains
+- RDKit rules match scaffolds; check against NPClassifier/ClassyFire or by hand.
+- Definitions of 'flavonoid' vary. Standardize glycosides, salts, and mixtures
+  before matching.
+- Ion mode, instrument, and collision energy all shift spectra; don't mix domains
   without checking.
 - Public records can contain label noise, missing structures, and duplicates.
-- A random split is optimistic; use group/compound-aware splits.
+- Random splits look better than they are. Use group/compound splits.
 
 **Next:** [Training](./05-training.md)

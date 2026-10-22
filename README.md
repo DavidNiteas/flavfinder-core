@@ -6,61 +6,51 @@
 
 ## English
 
-An independent, code-only implementation of the **flavfinder** MS/MS flavonoid
-classifier.
+`flavfinder-core` is a code-only implementation of the flavfinder MS/MS flavonoid
+classifier. It covers the whole pipeline: read spectra, preprocess, train,
+predict, evaluate, and check for data leakage.
 
-### Documentation
+### Docs
 
 - **English:** [Documentation index](docs/en/index.md)
 - **简体中文：** [文档索引](docs/zh-CN/index.md)
 
-The docs use progressive disclosure:
+The docs are ordered by how deep you want to go:
 
-| Level | English | 简体中文 |
-|---|---|---|
-| 0 — Scope | [Why code-only](docs/en/14-why-code-only.md) | [为什么只发代码](docs/zh-CN/14-why-code-only.md) |
-| 1 — Install & run | [Installation](docs/en/01-installation.md) → [Quickstart](docs/en/02-quickstart.md) | [安装](docs/zh-CN/01-installation.md) → [快速开始](docs/zh-CN/02-quickstart.md) |
-| 2 — Use your data | [Data format](docs/en/03-data-format.md) → [Build your own dataset](docs/en/15-build-your-own-dataset.md) → [Training](docs/en/05-training.md) | [数据格式](docs/zh-CN/03-data-format.md) → [自建数据集](docs/zh-CN/15-build-your-own-dataset.md) → [训练](docs/zh-CN/05-training.md) |
-| 3 — Trust the result | [Evaluation](docs/en/07-evaluation.md) → [Data audit](docs/en/08-data-audit.md) → [Method](docs/en/09-method.md) | [评估](docs/zh-CN/07-evaluation.md) → [数据审计](docs/zh-CN/08-data-audit.md) → [方法](docs/zh-CN/09-method.md) |
-| 4 — Reference | [CLI](docs/en/10-cli-reference.md) · [API](docs/en/11-python-api.md) · [Config](docs/en/12-configuration.md) | [CLI](docs/zh-CN/10-cli-reference.md) · [API](docs/zh-CN/11-python-api.md) · [配置](docs/zh-CN/12-configuration.md) |
+| If you need to... | Read |
+|---|---|
+| Run something once | [Installation](docs/en/01-installation.md) → [Quickstart](docs/en/02-quickstart.md) |
+| Use your own spectra | [Data format](docs/en/03-data-format.md) → [Build your own dataset](docs/en/15-build-your-own-dataset.md) → [Training](docs/en/05-training.md) |
+| Check whether a result is trustworthy | [Evaluation](docs/en/07-evaluation.md) → [Data audit](docs/en/08-data-audit.md) → [Method](docs/en/09-method.md) |
+| Look up a command or signature | [CLI](docs/en/10-cli-reference.md) · [API](docs/en/11-python-api.md) · [Config](docs/en/12-configuration.md) |
 
-### What this repository is
+### What's here
 
-`flavfinder-core` is a from-scratch, release-oriented implementation of the
-flavfinder MS/MS flavonoid classifier. It provides a clean, installable, testable,
-and reproducible codebase with:
-
-- MS/MS spectrum ingestion and validation
-- Binning and tokenization preprocessing
-- Pluggable model backends: AutoGluon, LightGBM, scikit-learn
+- MS/MS spectrum reading and validation
+- Binning and tokenization
+- AutoGluon, LightGBM, and scikit-learn backends
 - Training, prediction, evaluation, and threshold selection
-- Data auditing: exact/near duplicates, leakage reports, group-aware splits
-- RDKit-based flavonoid labeling from SMILES (`flavfinder label`)
-- Config-driven CLI and Python API
-- Synthetic-data tests only; no real spectra in the repository
+- Data audit: exact/near duplicates, leakage reports, group splits
+- RDKit-based labeling from SMILES (`flavfinder label`)
+- A small CLI and a Python API
 
-### Why this repository is code-only
+Tests use synthetic spectra. There are no real spectra in the repository.
 
-We intentionally do **not** distribute training data or pretrained models:
+### No data or model files
 
-1. **Model weights are not convenient to ship.** A fitted tabular bundle can be
-   large, while training is reproducible on a workstation and should be repeated
-   on the user's own spectra. We ship the full training pipeline and configs.
-2. **A frozen dataset would be stale.** Public MS/MS libraries such as GNPS,
-   MassBank, and MoNA contain far more spectra, newer records, and richer
-   metadata than any snapshot we could bundle. The data used during development
-   is an older reference version, not a recommended training source.
-3. **Users should build labels from current structures.** We provide an
-   RDKit-based labeling tool that turns a table with MS/MS and SMILES into labeled
-   flavonoid/non-flavonoid data using a subclass-aware SMARTS ruleset.
+The repo doesn't include training data or trained weights. Two reasons:
 
-This is a deliberate distribution choice, not a missing feature. See
-[Why code-only](docs/en/14-why-code-only.md) and
-[Build your own dataset](docs/en/15-build-your-own-dataset.md).
+1. **Model bundles are big.** Training is reproducible, and a workstation run
+   doesn't take long. How long depends on data size, feature width, and backend.
+   It's easier to retrain on your own spectra than to pass around a large bundle.
+2. **Bundled data goes stale.** GNPS, MassBank, and MoNA have more spectra, newer
+   records, and better metadata than any snapshot we could commit. Shipping the
+   old data would tie you to old labels and old instruments.
 
-### Build your own dataset
+If you have MS/MS and SMILES, `flavfinder label` can build labels for you. The
+rules match common flavonoid scaffolds and also record which one matched.
 
-If your table has `smiles`, `mz`, and `intensity` columns:
+### Build labels from MS/MS + SMILES
 
 ```bash
 flavfinder label \
@@ -70,25 +60,15 @@ flavfinder label \
 ```
 
 The output adds `label`, `flavonoid_subclass`, `matched_patterns`,
-`smiles_canonical`, `inchikey`, and `smiles_error`. Filter invalid SMILES, remove
+`smiles_canonical`, `inchikey`, and `smiles_error`. Drop invalid SMILES, remove
 duplicates, split by compound/InChIKey or near-duplicate groups, then train P/N
 models separately.
 
-RDKit is an optional extra:
+RDKit is optional:
 
 ```bash
 python -m pip install -e ".[chem]"
 ```
-
-### What is not included
-
-- Training data (`train_datasets/`)
-- Real example spectra
-- Pretrained model weights or AutoGluon predictors
-- Internal development notes or work orders
-
-The authors are listed in [`AUTHORS`](./AUTHORS); distribution scope is recorded
-in [`NOTICE`](./NOTICE).
 
 ### Install
 
@@ -96,30 +76,22 @@ in [`NOTICE`](./NOTICE).
 python -m pip install -e ".[dev]"
 ```
 
-Optional extras:
+Extras:
 
 ```bash
 python -m pip install -e ".[autogluon]"   # reference backend
-python -m pip install -e ".[lightgbm]"    # lightweight backend
+python -m pip install -e ".[lightgbm]"    # lighter backend
 python -m pip install -e ".[chem]"        # RDKit labeling
 ```
 
-The build backend is **hatchling**; the package is pip-installable from a wheel:
+The build backend is **hatchling**. To build a wheel:
 
 ```bash
 python -m build
 python -m pip install dist/flavfinder_core-*.whl
 ```
 
-### Quick check
-
-```bash
-flavfinder --describe
-pytest
-ruff check .
-```
-
-### Minimal workflow
+### Commands
 
 ```bash
 # Audit a table
@@ -128,7 +100,7 @@ flavfinder audit --input examples/input_format.json --output audit.json
 # Label MS/MS + SMILES
 flavfinder label --input raw_with_smiles.csv --output labeled.csv
 
-# Train (user-provided data; no data ships here)
+# Train on your own data
 flavfinder train \
   --train data/train.csv \
   --test data/test.csv \
@@ -148,25 +120,24 @@ flavfinder evaluate \
   --output reports/metrics.json
 ```
 
-See the [Quickstart](docs/en/02-quickstart.md) for a runnable synthetic example.
+A runnable synthetic example is in the [Quickstart](docs/en/02-quickstart.md).
 
 ### Status
 
-The core pipeline is implemented and covered by synthetic-data tests. The optional
-AutoGluon reference backend requires the `autogluon` extra; LightGBM and
-scikit-learn are suitable for local checks. Data and model artifacts are
-intentionally not distributed.
+The pipeline works and is covered by synthetic-data tests. AutoGluon is optional
+and needs the `autogluon` extra; LightGBM is fine for local experiments. No data
+or model files are shipped.
 
 ### Authors
 
 - Lvjun Guo (Ficere) `<gljx898989@163.com>`
 - David Niteas `<david.ql.d@foxmail.com>`
 
-See [`AUTHORS`](./AUTHORS) and [`NOTICE`](./NOTICE).
+See [`AUTHORS`](./AUTHORS). What's shipped is described in [`NOTICE`](./NOTICE).
 
 ### License
 
-Code is released under the MIT License. See [`LICENSE`](./LICENSE).
+MIT. See [`LICENSE`](./LICENSE).
 
 ---
 
@@ -176,55 +147,48 @@ Code is released under the MIT License. See [`LICENSE`](./LICENSE).
 
 [English](#english) · **简体中文**
 
-**flavfinder** MS/MS 黄酮分类器的独立、纯代码实现。
+`flavfinder-core` 是 flavfinder MS/MS 黄酮分类器的纯代码实现。它覆盖完整流程：
+读取谱图、预处理、训练、预测、评估，以及数据泄漏检查。
 
 ### 文档
 
 - **English:** [Documentation index](docs/en/index.md)
 - **简体中文：** [文档索引](docs/zh-CN/index.md)
 
-文档按渐进式组织：
+文档按使用深度排列：
 
-| 层级 | English | 简体中文 |
-|---|---|---|
-| 0 — 范围 | [Why code-only](docs/en/14-why-code-only.md) | [为什么只发代码](docs/zh-CN/14-why-code-only.md) |
-| 1 — 安装与运行 | [Installation](docs/en/01-installation.md) → [Quickstart](docs/en/02-quickstart.md) | [安装](docs/zh-CN/01-installation.md) → [快速开始](docs/zh-CN/02-quickstart.md) |
-| 2 — 使用自己的数据 | [Data format](docs/en/03-data-format.md) → [Build your own dataset](docs/en/15-build-your-own-dataset.md) → [Training](docs/en/05-training.md) | [数据格式](docs/zh-CN/03-data-format.md) → [自建数据集](docs/zh-CN/15-build-your-own-dataset.md) → [训练](docs/zh-CN/05-training.md) |
-| 3 — 信任结果 | [Evaluation](docs/en/07-evaluation.md) → [Data audit](docs/en/08-data-audit.md) → [Method](docs/en/09-method.md) | [评估](docs/zh-CN/07-evaluation.md) → [数据审计](docs/zh-CN/08-data-audit.md) → [方法](docs/zh-CN/09-method.md) |
-| 4 — 参考 | [CLI](docs/en/10-cli-reference.md) · [API](docs/en/11-python-api.md) · [Config](docs/en/12-configuration.md) | [CLI](docs/zh-CN/10-cli-reference.md) · [API](docs/zh-CN/11-python-api.md) · [配置](docs/zh-CN/12-configuration.md) |
+| 你要做什么 | 看哪里 |
+|---|---|
+| 先跑通一次 | [安装](docs/zh-CN/01-installation.md) → [快速开始](docs/zh-CN/02-quickstart.md) |
+| 用自己的谱图 | [数据格式](docs/zh-CN/03-data-format.md) → [自建数据集](docs/zh-CN/15-build-your-own-dataset.md) → [训练](docs/zh-CN/05-training.md) |
+| 判断结果能不能信 | [评估](docs/zh-CN/07-evaluation.md) → [数据审计](docs/zh-CN/08-data-audit.md) → [方法](docs/zh-CN/09-method.md) |
+| 查命令或函数签名 | [CLI](docs/zh-CN/10-cli-reference.md) · [API](docs/zh-CN/11-python-api.md) · [配置](docs/zh-CN/12-configuration.md) |
 
-### 这个仓库是什么
-
-`flavfinder-core` 是 flavfinder MS/MS 黄酮分类器的从零实现，面向可发布、可安装、
-可测试、可复现的代码库：
+### 仓库里有什么
 
 - MS/MS 谱图读取与校验
-- Binning 与 Tokenization 预处理
-- 可插拔模型后端：AutoGluon、LightGBM、scikit-learn
+- Binning 与 Tokenization
+- AutoGluon、LightGBM、scikit-learn 后端
 - 训练、预测、评估与阈值选择
 - 数据审计：精确/近重复、泄漏报告、分组切分
-- 基于 RDKit 的 SMILES 黄酮标注（`flavfinder label`）
-- 配置驱动 CLI 与 Python API
-- 仅使用合成数据测试；仓库不含真实谱图
+- 基于 RDKit 的 SMILES 标注（`flavfinder label`）
+- 一个小型 CLI 和 Python API
 
-### 为什么只发代码
+测试用的是合成谱图，仓库里没有真实谱图。
 
-我们刻意**不**分发训练数据和预训练模型：
+### 没有数据和模型文件
 
-1. **模型权重不方便分发。** 拟合后的表格模型 bundle 可能很大；训练流程可复现，
-   单机可完成，应该用户在自备谱图上重训。我们提供完整训练流程与配置。
-2. **冻结数据会过时。** GNPS、MassBank、MoNA 等公开 MS/MS 库比任何快照都更大、
-   更新、元数据更丰富。开发时使用的数据是较旧的参考版本，不推荐作为训练数据源。
-3. **用户应基于当前结构生成标签。** 我们提供基于 RDKit 的标注工具，用亚类感知的
-   SMARTS 规则把“MS/MS + SMILES”表转成黄酮/非黄酮标签。
+仓库里没有训练数据，也没有训练好的权重。原因有两个：
 
-这是刻意的分发选择，不是缺失功能。见
-[为什么只发代码](docs/zh-CN/14-why-code-only.md) 与
-[自建数据集](docs/zh-CN/15-build-your-own-dataset.md)。
+1. **模型 bundle 很大。** 训练可复现，工作站上跑一遍不算久；具体时间看数据量、
+   特征维度和后端。相比之下，在自己的谱图上重训更省事。
+2. **打包数据会过时。** GNPS、MassBank、MoNA 的谱图更多、更新、元数据更全，
+   比我们提交的任何快照都好。把旧数据打包进来，只会把用户绑在旧标签和旧仪器上。
 
-### 自建数据集
+如果你有 MS/MS 和 SMILES，可以用 `flavfinder label` 生成标签。规则覆盖常见黄酮
+骨架，同时记录命中的具体类型。
 
-如果表里有 `smiles`、`mz`、`intensity` 列：
+### 从 MS/MS + SMILES 生成标签
 
 ```bash
 flavfinder label \
@@ -234,23 +198,14 @@ flavfinder label \
 ```
 
 输出会增加 `label`、`flavonoid_subclass`、`matched_patterns`、
-`smiles_canonical`、`inchikey` 与 `smiles_error`。过滤非法 SMILES、去重、
+`smiles_canonical`、`inchikey` 和 `smiles_error`。过滤非法 SMILES、去重、
 按化合物/InChIKey 或近重复组切分，然后分别训练 P/N 模型。
 
-RDKit 是可选 extra：
+RDKit 是可选依赖：
 
 ```bash
 python -m pip install -e ".[chem]"
 ```
-
-### 本仓库不包含
-
-- 训练数据（`train_datasets/`）
-- 真实示例谱图
-- 预训练模型权重或 AutoGluon predictor
-- 内部开发笔记或工单
-
-作者见 [`AUTHORS`](./AUTHORS)，分发范围见 [`NOTICE`](./NOTICE)。
 
 ### 安装
 
@@ -266,22 +221,14 @@ python -m pip install -e ".[lightgbm]"    # 轻量后端
 python -m pip install -e ".[chem]"        # RDKit 标注
 ```
 
-构建后端是 **hatchling**，可从 wheel 安装：
+构建后端是 **hatchling**。构建 wheel：
 
 ```bash
 python -m build
 python -m pip install dist/flavfinder_core-*.whl
 ```
 
-### 快速检查
-
-```bash
-flavfinder --describe
-pytest
-ruff check .
-```
-
-### 最小工作流
+### 常用命令
 
 ```bash
 # 审计
@@ -290,7 +237,7 @@ flavfinder audit --input examples/input_format.json --output audit.json
 # 标注 MS/MS + SMILES
 flavfinder label --input raw_with_smiles.csv --output labeled.csv
 
-# 训练（用户自备数据；仓库不含数据）
+# 用自己的数据训练
 flavfinder train \
   --train data/train.csv \
   --test data/test.csv \
@@ -314,16 +261,16 @@ flavfinder evaluate \
 
 ### 状态
 
-核心流程已实现并有合成数据测试覆盖。AutoGluon 参考后端需要 `autogluon` extra；
-LightGBM 与 scikit-learn 适合本地检查。数据与模型产物刻意不分发。
+流程可用，并有合成数据测试覆盖。AutoGluon 是可选后端，需要 `autogluon` extra；
+本地实验用 LightGBM 就够了。仓库不包含数据或模型文件。
 
 ### 作者
 
 - Lvjun Guo (Ficere) `<gljx898989@163.com>`
 - David Niteas `<david.ql.d@foxmail.com>`
 
-见 [`AUTHORS`](./AUTHORS) 与 [`NOTICE`](./NOTICE)。
+见 [`AUTHORS`](./AUTHORS)。仓库包含什么见 [`NOTICE`](./NOTICE)。
 
 ### 许可证
 
-代码使用 MIT 许可证。见 [`LICENSE`](./LICENSE)。
+MIT，见 [`LICENSE`](./LICENSE)。

@@ -70,8 +70,8 @@ python -m pip install -e ".[chem]"
 
 ### `flavfinder label` reports invalid SMILES
 
-The row is kept with `smiles_error` set and `label` empty. Filter these rows out
-before training; do not treat them as negatives.
+The row is kept with `smiles_error` set and `label` empty. Drop these rows before
+training. Don't use them as negatives.
 
 ### `output directory is not empty`
 
