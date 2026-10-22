@@ -12,3 +12,5 @@ The docs go from first run to reference:
 
 The repo contains code only. It doesn't include training data, real spectra, or
 model weights. [`NOTICE`](../NOTICE) describes what's shipped.
+
+Working with an AI assistant? Hand it [`AGENTS.md`](../AGENTS.md).

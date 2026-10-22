@@ -24,6 +24,12 @@ The docs are ordered by how deep you want to go:
 | Check whether a result is trustworthy | [Evaluation](docs/en/07-evaluation.md) → [Data audit](docs/en/08-data-audit.md) → [Method](docs/en/09-method.md) |
 | Look up a command or signature | [CLI](docs/en/10-cli-reference.md) · [API](docs/en/11-python-api.md) · [Config](docs/en/12-configuration.md) |
 
+### Just want the result?
+
+That's fine. The repo includes an agent-facing guide: [AGENTS.md](./AGENTS.md).
+Clone it, hand the repo to your AI assistant, and let it run the workflow. If you
+don't have data yet, it will ask for an MS/MS + SMILES table first.
+
 ### What's here
 
 - MS/MS spectrum reading and validation
@@ -163,6 +169,11 @@ MIT. See [`LICENSE`](./LICENSE).
 | 用自己的谱图 | [数据格式](docs/zh-CN/03-data-format.md) → [自建数据集](docs/zh-CN/15-build-your-own-dataset.md) → [训练](docs/zh-CN/05-training.md) |
 | 判断结果能不能信 | [评估](docs/zh-CN/07-evaluation.md) → [数据审计](docs/zh-CN/08-data-audit.md) → [方法](docs/zh-CN/09-method.md) |
 | 查命令或函数签名 | [CLI](docs/zh-CN/10-cli-reference.md) · [API](docs/zh-CN/11-python-api.md) · [配置](docs/zh-CN/12-configuration.md) |
+
+### 只想要结果？
+
+也没关系。仓库里有面向 Agent 的说明：[AGENTS.md](./AGENTS.md)。把仓库克隆下来，
+交给你的 AI 助理就行。如果还没有数据，它会先让你准备 MS/MS + SMILES。
 
 ### 仓库里有什么
 
